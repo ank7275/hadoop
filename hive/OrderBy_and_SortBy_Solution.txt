@@ -1,0 +1,377 @@
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from users order by salary ASC;
+INFO  : Compiling command(queryId=hive_20210810053350_3bf44f80-38a4-46f2-b119-f7912b8cc059): select * from users order by salary ASC
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:users.id, type:string, comment:null), FieldSchema(name:users.name, type:string, comment:null), FieldSchema(name:users.salary, type:string, comment:null), FieldSchema(name:users.unit, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810053350_3bf44f80-38a4-46f2-b119-f7912b8cc059); Time taken: 1.722 seconds
+INFO  : Executing command(queryId=hive_20210810053350_3bf44f80-38a4-46f2-b119-f7912b8cc059): select * from users order by salary ASC
+INFO  : Query ID = hive_20210810053350_3bf44f80-38a4-46f2-b119-f7912b8cc059
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Subscribed to counters: [] for queryId: hive_20210810053350_3bf44f80-38a4-46f2-b119-f7912b8cc059
+INFO  : Session is already open
+INFO  : Dag name: select * from users order by salary ASC (Stage-1)
+INFO  : Tez session was closed. Reopening...
+INFO  : Session re-established.
+INFO  : Session re-established.
+INFO  : Status: Running (Executing on YARN cluster with App id application_1628559691397_0005)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 119.74 s
+----------------------------------------------------------------------------------------------
+INFO  : Status: DAG finished successfully in 117.87 seconds
+INFO  :
+INFO  : Query Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : OPERATION                            DURATION
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : Compile Query                           1.72s
+INFO  : Prepare Plan                            2.04s
+INFO  : Get Query Coordinator (AM)              0.00s
+INFO  : Submit Plan                            22.72s
+INFO  : Start DAG                               1.91s
+INFO  : Run DAG                               117.87s
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : Task Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :   VERTICES      DURATION(ms)   CPU_TIME(ms)    GC_TIME(ms)   INPUT_RECORDS   OUTPUT_RECORDS
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :      Map 1         105284.00         11,000            887               7                7
+INFO  :  Reducer 2           8398.00          2,560             36               7                0
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : org.apache.tez.common.counters.DAGCounter:
+INFO  :    NUM_SUCCEEDED_TASKS: 2
+INFO  :    TOTAL_LAUNCHED_TASKS: 2
+INFO  :    AM_CPU_MILLISECONDS: 11840
+INFO  :    AM_GC_TIME_MILLIS: 128
+INFO  : File System Counters:
+INFO  :    FILE_BYTES_READ: 229
+INFO  :    FILE_BYTES_WRITTEN: 165
+INFO  :    HDFS_BYTES_READ: 115
+INFO  :    HDFS_BYTES_WRITTEN: 286
+INFO  :    HDFS_READ_OPS: 4
+INFO  :    HDFS_WRITE_OPS: 2
+INFO  :    HDFS_OP_CREATE: 1
+INFO  :    HDFS_OP_GET_FILE_STATUS: 3
+INFO  :    HDFS_OP_OPEN: 1
+INFO  :    HDFS_OP_RENAME: 1
+INFO  : org.apache.tez.common.counters.TaskCounter:
+INFO  :    REDUCE_INPUT_GROUPS: 4
+INFO  :    REDUCE_INPUT_RECORDS: 7
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    SPILLED_RECORDS: 14
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    MERGED_MAP_OUTPUTS: 1
+INFO  :    GC_TIME_MILLIS: 923
+INFO  :    TASK_DURATION_MILLIS: 113313
+INFO  :    CPU_MILLISECONDS: 13560
+INFO  :    PHYSICAL_MEMORY_BYTES: 658505728
+INFO  :    VIRTUAL_MEMORY_BYTES: 4401602560
+INFO  :    COMMITTED_HEAP_BYTES: 658505728
+INFO  :    INPUT_RECORDS_PROCESSED: 7
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 115
+INFO  :    OUTPUT_RECORDS: 7
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_BYTES: 136
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 141
+INFO  :    OUTPUT_BYTES_PHYSICAL: 133
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 133
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SHUFFLE_BYTES: 133
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 141
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 133
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    SHUFFLE_PHASE_TIME: 1632
+INFO  :    MERGE_PHASE_TIME: 2079
+INFO  :    FIRST_EVENT_RECEIVED: 1242
+INFO  :    LAST_EVENT_RECEIVED: 1242
+INFO  : HIVE:
+INFO  :    CREATED_FILES: 1
+INFO  :    DESERIALIZE_ERRORS: 0
+INFO  :    RECORDS_IN_Map_1: 7
+INFO  :    RECORDS_OUT_0: 7
+INFO  :    RECORDS_OUT_INTERMEDIATE_Map_1: 7
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_2: 0
+INFO  :    RECORDS_OUT_OPERATOR_FS_8: 7
+INFO  :    RECORDS_OUT_OPERATOR_MAP_0: 0
+INFO  :    RECORDS_OUT_OPERATOR_RS_6: 7
+INFO  :    RECORDS_OUT_OPERATOR_SEL_5: 7
+INFO  :    RECORDS_OUT_OPERATOR_SEL_7: 7
+INFO  :    RECORDS_OUT_OPERATOR_TS_0: 7
+INFO  : Shuffle Errors:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : Shuffle Errors_Reducer_2_INPUT_Map_1:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : TaskCounter_Map_1_INPUT_users:
+INFO  :    INPUT_RECORDS_PROCESSED: 7
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 115
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_2:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 136
+INFO  :    OUTPUT_BYTES_PHYSICAL: 133
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 141
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 7
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SPILLED_RECORDS: 7
+INFO  : TaskCounter_Reducer_2_INPUT_Map_1:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 133
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    FIRST_EVENT_RECEIVED: 1242
+INFO  :    LAST_EVENT_RECEIVED: 1242
+INFO  :    MERGED_MAP_OUTPUTS: 1
+INFO  :    MERGE_PHASE_TIME: 2079
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    REDUCE_INPUT_GROUPS: 4
+INFO  :    REDUCE_INPUT_RECORDS: 7
+INFO  :    SHUFFLE_BYTES: 133
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 141
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 133
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 1632
+INFO  :    SPILLED_RECORDS: 7
+INFO  : TaskCounter_Reducer_2_OUTPUT_out_Reducer_2:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : org.apache.hadoop.hive.ql.exec.tez.HiveInputCounters:
+INFO  :    GROUPED_INPUT_SPLITS_Map_1: 1
+INFO  :    INPUT_DIRECTORIES_Map_1: 1
+INFO  :    INPUT_FILES_Map_1: 1
+INFO  :    RAW_INPUT_SPLITS_Map_1: 1
+INFO  : Completed executing command(queryId=hive_20210810053350_3bf44f80-38a4-46f2-b119-f7912b8cc059); Time taken: 145.593 seconds
+INFO  : OK
++-----------+-------------+---------------+-------------+
+| users.id  | users.name  | users.salary  | users.unit  |
++-----------+-------------+---------------+-------------+
+| 1         | Amit        | 100           | DNA         |
+| 5         | Kranti      | 100           | FCS         |
+| 2         | Sumit       | 200           | DNA         |
+| 6         | Mahoor      | 200           | FCS         |
+| 3         | Yadav       | 300           | DNA         |
+| 4         | Sunil       | 500           | FCS         |
+| 8         | Chandra     | 500           | DNA         |
++-----------+-------------+---------------+-------------+
+7 rows selected (148.512 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+
+
+
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> set mapred.reduce.tasks=2;
+No rows affected (0.097 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from users sort by salary ASC;
+INFO  : Compiling command(queryId=hive_20210810053738_2f56576b-59ae-40e1-9311-317562d3bbdd): select * from users sort by salary ASC
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:users.id, type:string, comment:null), FieldSchema(name:users.name, type:string, comment:null), FieldSchema(name:users.salary, type:string, comment:null), FieldSchema(name:users.unit, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810053738_2f56576b-59ae-40e1-9311-317562d3bbdd); Time taken: 0.302 seconds
+INFO  : Executing command(queryId=hive_20210810053738_2f56576b-59ae-40e1-9311-317562d3bbdd): select * from users sort by salary ASC
+INFO  : Query ID = hive_20210810053738_2f56576b-59ae-40e1-9311-317562d3bbdd
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Subscribed to counters: [] for queryId: hive_20210810053738_2f56576b-59ae-40e1-9311-317562d3bbdd
+INFO  : Session is already open
+INFO  : Dag name: select * from users sort by salary ASC (Stage-1)
+INFO  : Status: Running (Executing on YARN cluster with App id application_1628559691397_0005)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 36.00 s
+----------------------------------------------------------------------------------------------
+INFO  : Status: DAG finished successfully in 35.43 seconds
+INFO  :
+INFO  : Query Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : OPERATION                            DURATION
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : Compile Query                           0.30s
+INFO  : Prepare Plan                            1.11s
+INFO  : Get Query Coordinator (AM)              0.00s
+INFO  : Submit Plan                             0.20s
+INFO  : Start DAG                               0.65s
+INFO  : Run DAG                                35.43s
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : Task Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :   VERTICES      DURATION(ms)   CPU_TIME(ms)    GC_TIME(ms)   INPUT_RECORDS   OUTPUT_RECORDS
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :      Map 1           5167.00          7,910            459               7                7
+INFO  :  Reducer 2          26629.00          8,670            447               7                0
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : org.apache.tez.common.counters.DAGCounter:
+INFO  :    NUM_SUCCEEDED_TASKS: 3
+INFO  :    TOTAL_LAUNCHED_TASKS: 3
+INFO  :    AM_CPU_MILLISECONDS: 2790
+INFO  :    AM_GC_TIME_MILLIS: 19
+INFO  : File System Counters:
+INFO  :    FILE_BYTES_READ: 474
+INFO  :    FILE_BYTES_WRITTEN: 227
+INFO  :    HDFS_BYTES_READ: 115
+INFO  :    HDFS_BYTES_WRITTEN: 373
+INFO  :    HDFS_READ_OPS: 7
+INFO  :    HDFS_WRITE_OPS: 4
+INFO  :    HDFS_OP_CREATE: 2
+INFO  :    HDFS_OP_GET_FILE_STATUS: 6
+INFO  :    HDFS_OP_OPEN: 1
+INFO  :    HDFS_OP_RENAME: 2
+INFO  : org.apache.tez.common.counters.TaskCounter:
+INFO  :    REDUCE_INPUT_GROUPS: 5
+INFO  :    REDUCE_INPUT_RECORDS: 7
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    SPILLED_RECORDS: 14
+INFO  :    NUM_SHUFFLED_INPUTS: 2
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    MERGED_MAP_OUTPUTS: 2
+INFO  :    GC_TIME_MILLIS: 906
+INFO  :    TASK_DURATION_MILLIS: 15665
+INFO  :    CPU_MILLISECONDS: 16580
+INFO  :    PHYSICAL_MEMORY_BYTES: 869269504
+INFO  :    VIRTUAL_MEMORY_BYTES: 6602764288
+INFO  :    COMMITTED_HEAP_BYTES: 869269504
+INFO  :    INPUT_RECORDS_PROCESSED: 7
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 115
+INFO  :    OUTPUT_RECORDS: 7
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_BYTES: 136
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 152
+INFO  :    OUTPUT_BYTES_PHYSICAL: 171
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 171
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SHUFFLE_BYTES: 171
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 152
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 171
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    SHUFFLE_PHASE_TIME: 4329
+INFO  :    MERGE_PHASE_TIME: 4616
+INFO  :    FIRST_EVENT_RECEIVED: 3376
+INFO  :    LAST_EVENT_RECEIVED: 3376
+INFO  : HIVE:
+INFO  :    CREATED_FILES: 2
+INFO  :    DESERIALIZE_ERRORS: 0
+INFO  :    RECORDS_IN_Map_1: 7
+INFO  :    RECORDS_OUT_0: 7
+INFO  :    RECORDS_OUT_INTERMEDIATE_Map_1: 7
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_2: 0
+INFO  :    RECORDS_OUT_OPERATOR_FS_8: 7
+INFO  :    RECORDS_OUT_OPERATOR_MAP_0: 0
+INFO  :    RECORDS_OUT_OPERATOR_RS_6: 7
+INFO  :    RECORDS_OUT_OPERATOR_SEL_5: 7
+INFO  :    RECORDS_OUT_OPERATOR_SEL_7: 7
+INFO  :    RECORDS_OUT_OPERATOR_TS_0: 7
+INFO  : Shuffle Errors:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : Shuffle Errors_Reducer_2_INPUT_Map_1:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : TaskCounter_Map_1_INPUT_users:
+INFO  :    INPUT_RECORDS_PROCESSED: 7
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 115
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_2:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 136
+INFO  :    OUTPUT_BYTES_PHYSICAL: 171
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 152
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 7
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SPILLED_RECORDS: 7
+INFO  : TaskCounter_Reducer_2_INPUT_Map_1:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 171
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    FIRST_EVENT_RECEIVED: 3376
+INFO  :    LAST_EVENT_RECEIVED: 3376
+INFO  :    MERGED_MAP_OUTPUTS: 2
+INFO  :    MERGE_PHASE_TIME: 4616
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 2
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    REDUCE_INPUT_GROUPS: 5
+INFO  :    REDUCE_INPUT_RECORDS: 7
+INFO  :    SHUFFLE_BYTES: 171
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 152
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 171
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 4329
+INFO  :    SPILLED_RECORDS: 7
+INFO  : TaskCounter_Reducer_2_OUTPUT_out_Reducer_2:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : org.apache.hadoop.hive.ql.exec.tez.HiveInputCounters:
+INFO  :    GROUPED_INPUT_SPLITS_Map_1: 1
+INFO  :    INPUT_DIRECTORIES_Map_1: 1
+INFO  :    INPUT_FILES_Map_1: 1
+INFO  :    RAW_INPUT_SPLITS_Map_1: 1
+INFO  : Completed executing command(queryId=hive_20210810053738_2f56576b-59ae-40e1-9311-317562d3bbdd); Time taken: 37.545 seconds
+INFO  : OK
++-----------+-------------+---------------+-------------+
+| users.id  | users.name  | users.salary  | users.unit  |
++-----------+-------------+---------------+-------------+
+| 1         | Amit        | 100           | DNA         |
+| 5         | Kranti      | 100           | FCS         |
+| 3         | Yadav       | 300           | DNA         |
+| 4         | Sunil       | 500           | FCS         |
+| 2         | Sumit       | 200           | DNA         |
+| 6         | Mahoor      | 200           | FCS         |
+| 8         | Chandra     | 500           | DNA         |
++-----------+-------------+---------------+-------------+
+7 rows selected (38.992 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+

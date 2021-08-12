@@ -1,0 +1,1308 @@
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> CREATE TABLE employee
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> id INT,
+. . . . . . . . . . . . . . . . . . . . . . .> name STRING,
+. . . . . . . . . . . . . . . . . . . . . . .> skills ARRAY<STRING>
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED
+. . . . . . . . . . . . . . . . . . . . . . .> FIELDS TERMINATED BY ','
+. . . . . . . . . . . . . . . . . . . . . . .> COLLECTION ITEMS TERMINATED BY ':'
+. . . . . . . . . . . . . . . . . . . . . . .> STORED AS TEXTFILE;
+INFO  : Compiling command(queryId=hive_20210810084328_d3992a4a-c3d5-45a5-9521-f501ebb6ee25): CREATE TABLE employee
+(
+id INT,
+name STRING,
+skills ARRAY<STRING>
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY ':'
+STORED AS TEXTFILE
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810084328_d3992a4a-c3d5-45a5-9521-f501ebb6ee25); Time taken: 1.224 seconds
+INFO  : Executing command(queryId=hive_20210810084328_d3992a4a-c3d5-45a5-9521-f501ebb6ee25): CREATE TABLE employee
+(
+id INT,
+name STRING,
+skills ARRAY<STRING>
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY ':'
+STORED AS TEXTFILE
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810084328_d3992a4a-c3d5-45a5-9521-f501ebb6ee25); Time taken: 1.49 seconds
+INFO  : OK
+No rows affected (3.89 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> load data inpath '/tmp/employees.csv' into table employee;
+INFO  : Compiling command(queryId=hive_20210810084340_d2f05170-7e4e-479c-b8f3-869c94c40f81): load data inpath '/tmp/employees.csv' into table employee
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810084340_d2f05170-7e4e-479c-b8f3-869c94c40f81); Time taken: 1.366 seconds
+INFO  : Executing command(queryId=hive_20210810084340_d2f05170-7e4e-479c-b8f3-869c94c40f81): load data inpath '/tmp/employees.csv' into table employee
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.employee from hdfs://sandbox-hdp.hortonworks.com:8020/tmp/employees.csv
+INFO  : Starting task [Stage-1:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810084340_d2f05170-7e4e-479c-b8f3-869c94c40f81); Time taken: 17.315 seconds
+INFO  : OK
+No rows affected (19.641 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from employee;
+INFO  : Compiling command(queryId=hive_20210810084409_4663f3fb-c67f-4578-b3b9-4f9255b39e96): select * from employee
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:employee.id, type:int, comment:null), FieldSchema(name:employee.name, type:string, comment:null), FieldSchema(name:employee.skills, type:array<string>, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810084409_4663f3fb-c67f-4578-b3b9-4f9255b39e96); Time taken: 9.998 seconds
+INFO  : Executing command(queryId=hive_20210810084409_4663f3fb-c67f-4578-b3b9-4f9255b39e96): select * from employee
+INFO  : Completed executing command(queryId=hive_20210810084409_4663f3fb-c67f-4578-b3b9-4f9255b39e96); Time taken: 0.172 seconds
+INFO  : OK
++--------------+----------------+--------------------------------------------+
+| employee.id  | employee.name  |              employee.skills               |
++--------------+----------------+--------------------------------------------+
+| 101          | Amit           | ["HADOOP","HIVE","SPARK","BIG-DATA"]       |
+| 102          | Sumit          | ["HIVE","OOZIE","HADOOP","SPARK","STORM"]  |
+| 103          | Rohit          | ["KAFKA","CASSANDRA","HBASE"]              |
++--------------+----------------+--------------------------------------------+
+3 rows selected (11.551 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> SELECT
+. . . . . . . . . . . . . . . . . . . . . . .> size(skills),
+. . . . . . . . . . . . . . . . . . . . . . .> array_contains(skills, 'HADOOP'),
+. . . . . . . . . . . . . . . . . . . . . . .> sort_array(skills),
+. . . . . . . . . . . . . . . . . . . . . . .> concat_ws("|", skills)
+. . . . . . . . . . . . . . . . . . . . . . .> FROM employee;
+INFO  : Compiling command(queryId=hive_20210810084454_6ef0f257-b0cb-4b7c-81c2-2914d9b63108): SELECT
+size(skills),
+array_contains(skills, 'HADOOP'),
+sort_array(skills),
+concat_ws("|", skills)
+FROM employee
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_c0, type:int, comment:null), FieldSchema(name:_c1, type:boolean, comment:null), FieldSchema(name:_c2, type:array<string>, comment:null), FieldSchema(name:_c3, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810084454_6ef0f257-b0cb-4b7c-81c2-2914d9b63108); Time taken: 4.495 seconds
+INFO  : Executing command(queryId=hive_20210810084454_6ef0f257-b0cb-4b7c-81c2-2914d9b63108): SELECT
+size(skills),
+array_contains(skills, 'HADOOP'),
+sort_array(skills),
+concat_ws("|", skills)
+FROM employee
+INFO  : Completed executing command(queryId=hive_20210810084454_6ef0f257-b0cb-4b7c-81c2-2914d9b63108); Time taken: 0.05 seconds
+INFO  : OK
++------+--------+--------------------------------------------+--------------------------------+
+| _c0  |  _c1   |                    _c2                     |              _c3               |
++------+--------+--------------------------------------------+--------------------------------+
+| 4    | true   | ["BIG-DATA","HADOOP","HIVE","SPARK"]       | HADOOP|HIVE|SPARK|BIG-DATA     |
+| 5    | true   | ["HADOOP","HIVE","OOZIE","SPARK","STORM"]  | HIVE|OOZIE|HADOOP|SPARK|STORM  |
+| 3    | false  | ["CASSANDRA","HBASE","KAFKA"]              | KAFKA|CASSANDRA|HBASE          |
++------+--------+--------------------------------------------+--------------------------------+
+3 rows selected (6.706 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> SELECT explode(skills) AS skills FROM employee;
+INFO  : Compiling command(queryId=hive_20210810084655_0b18b239-cec7-46af-89f6-38223e1cf222): SELECT explode(skills) AS skills FROM employee
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:skills, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810084655_0b18b239-cec7-46af-89f6-38223e1cf222); Time taken: 4.379 seconds
+INFO  : Executing command(queryId=hive_20210810084655_0b18b239-cec7-46af-89f6-38223e1cf222): SELECT explode(skills) AS skills FROM employee
+INFO  : Completed executing command(queryId=hive_20210810084655_0b18b239-cec7-46af-89f6-38223e1cf222); Time taken: 0.199 seconds
+INFO  : OK
++------------+
+|   skills   |
++------------+
+| HADOOP     |
+| HIVE       |
+| SPARK      |
+| BIG-DATA   |
+| HIVE       |
+| OOZIE      |
+| HADOOP     |
+| SPARK      |
+| STORM      |
+| KAFKA      |
+| CASSANDRA  |
+| HBASE      |
++------------+
+12 rows selected (5.216 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> SELECT id, name, skill
+. . . . . . . . . . . . . . . . . . . . . . .> FROM employee LATERAL VIEW explode(skills) skill_set
+. . . . . . . . . . . . . . . . . . . . . . .> AS skill;
+INFO  : Compiling command(queryId=hive_20210810084741_5313f6a9-7f0f-43b1-b69c-746609e34a75): SELECT id, name, skill
+FROM employee LATERAL VIEW explode(skills) skill_set
+AS skill
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:id, type:int, comment:null), FieldSchema(name:name, type:string, comment:null), FieldSchema(name:skill, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810084741_5313f6a9-7f0f-43b1-b69c-746609e34a75); Time taken: 1.148 seconds
+INFO  : Executing command(queryId=hive_20210810084741_5313f6a9-7f0f-43b1-b69c-746609e34a75): SELECT id, name, skill
+FROM employee LATERAL VIEW explode(skills) skill_set
+AS skill
+INFO  : Completed executing command(queryId=hive_20210810084741_5313f6a9-7f0f-43b1-b69c-746609e34a75); Time taken: 0.028 seconds
+INFO  : OK
++------+--------+------------+
+|  id  |  name  |   skill    |
++------+--------+------------+
+| 101  | Amit   | HADOOP     |
+| 101  | Amit   | HIVE       |
+| 101  | Amit   | SPARK      |
+| 101  | Amit   | BIG-DATA   |
+| 102  | Sumit  | HIVE       |
+| 102  | Sumit  | OOZIE      |
+| 102  | Sumit  | HADOOP     |
+| 102  | Sumit  | SPARK      |
+| 102  | Sumit  | STORM      |
+| 103  | Rohit  | KAFKA      |
+| 103  | Rohit  | CASSANDRA  |
+| 103  | Rohit  | HBASE      |
++------+--------+------------+
+12 rows selected (1.389 seconds)
+
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> create table rc_table
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> c1 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c2 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c3 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c4 int
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> stored as RCFILE;
+INFO  : Compiling command(queryId=hive_20210810084954_570e0617-0984-45a3-a2e6-77735ef8170a): create table rc_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+stored as RCFILE
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810084954_570e0617-0984-45a3-a2e6-77735ef8170a); Time taken: 1.067 seconds
+INFO  : Executing command(queryId=hive_20210810084954_570e0617-0984-45a3-a2e6-77735ef8170a): create table rc_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+stored as RCFILE
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810084954_570e0617-0984-45a3-a2e6-77735ef8170a); Time taken: 4.046 seconds
+INFO  : OK
+No rows affected (5.752 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> create table prq_table
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> c1 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c2 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c3 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c4 int
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> stored as PARQUET;
+INFO  : Compiling command(queryId=hive_20210810085019_a14af173-0d89-4d17-a65c-e69a16b509c4): create table prq_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+stored as PARQUET
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810085019_a14af173-0d89-4d17-a65c-e69a16b509c4); Time taken: 0.768 seconds
+INFO  : Executing command(queryId=hive_20210810085019_a14af173-0d89-4d17-a65c-e69a16b509c4): create table prq_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+stored as PARQUET
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810085019_a14af173-0d89-4d17-a65c-e69a16b509c4); Time taken: 5.563 seconds
+INFO  : OK
+No rows affected (9.686 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> create table orc_table
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> c1 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c2 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c3 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c4 int
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> stored as ORC;
+INFO  : Compiling command(queryId=hive_20210810085041_2b3be58a-ccc0-49c5-ba65-9f730e8f00ae): create table orc_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+stored as ORC
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810085041_2b3be58a-ccc0-49c5-ba65-9f730e8f00ae); Time taken: 0.071 seconds
+INFO  : Executing command(queryId=hive_20210810085041_2b3be58a-ccc0-49c5-ba65-9f730e8f00ae): create table orc_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+stored as ORC
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810085041_2b3be58a-ccc0-49c5-ba65-9f730e8f00ae); Time taken: 0.365 seconds
+INFO  : OK
+No rows affected (0.536 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> create table text_table
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> c1 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c2 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c3 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c4 int
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> row format delimited
+. . . . . . . . . . . . . . . . . . . . . . .> fields terminated by '|';
+INFO  : Compiling command(queryId=hive_20210810085305_7a4b02b7-0b71-4edc-b5f2-45d85ad21318): create table text_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+row format delimited
+fields terminated by '|'
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810085305_7a4b02b7-0b71-4edc-b5f2-45d85ad21318); Time taken: 0.125 seconds
+INFO  : Executing command(queryId=hive_20210810085305_7a4b02b7-0b71-4edc-b5f2-45d85ad21318): create table text_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+row format delimited
+fields terminated by '|'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810085305_7a4b02b7-0b71-4edc-b5f2-45d85ad21318); Time taken: 0.437 seconds
+INFO  : OK
+No rows affected (1.808 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> create table seq_table
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> c1 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c2 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c3 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c4 int
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> stored as SEQUENCEFILE;
+INFO  : Compiling command(queryId=hive_20210810085514_1f72d150-c9e0-4c29-9053-4c22c9efdf07): create table seq_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+stored as SEQUENCEFILE
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810085514_1f72d150-c9e0-4c29-9053-4c22c9efdf07); Time taken: 0.158 seconds
+INFO  : Executing command(queryId=hive_20210810085514_1f72d150-c9e0-4c29-9053-4c22c9efdf07): create table seq_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+stored as SEQUENCEFILE
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810085514_1f72d150-c9e0-4c29-9053-4c22c9efdf07); Time taken: 0.632 seconds
+INFO  : OK
+No rows affected (1.229 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> load data inpath '/tmp/text_format.txt' into table text_table;
+Error: Error while compiling statement: FAILED: SemanticException Unable to load data to destination table. Error: The file that you are trying to load does not match the file format of the destination table. (state=42000,code=40000)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> drop table text_table;
+INFO  : Compiling command(queryId=hive_20210810085648_e0fe0a04-ea9b-42b2-a20f-e8c4a4f464fb): drop table text_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810085648_e0fe0a04-ea9b-42b2-a20f-e8c4a4f464fb); Time taken: 0.134 seconds
+INFO  : Executing command(queryId=hive_20210810085648_e0fe0a04-ea9b-42b2-a20f-e8c4a4f464fb): drop table text_table
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810085648_e0fe0a04-ea9b-42b2-a20f-e8c4a4f464fb); Time taken: 0.241 seconds
+INFO  : OK
+No rows affected (0.628 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> create table text_table
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> c1 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c2 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c3 int,
+. . . . . . . . . . . . . . . . . . . . . . .> c4 int
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> row format delimited
+. . . . . . . . . . . . . . . . . . . . . . .> fields terminated by '|'
+. . . . . . . . . . . . . . . . . . . . . . .> stored as textfile;
+INFO  : Compiling command(queryId=hive_20210810085722_3915645b-3d0e-419a-b5b9-a1223b268dc6): create table text_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+row format delimited
+fields terminated by '|'
+stored as textfile
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810085722_3915645b-3d0e-419a-b5b9-a1223b268dc6); Time taken: 0.095 seconds
+INFO  : Executing command(queryId=hive_20210810085722_3915645b-3d0e-419a-b5b9-a1223b268dc6): create table text_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+row format delimited
+fields terminated by '|'
+stored as textfile
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810085722_3915645b-3d0e-419a-b5b9-a1223b268dc6); Time taken: 0.166 seconds
+INFO  : OK
+No rows affected (0.484 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> load data inpath '/tmp/text_format.txt' into table text_table;
+INFO  : Compiling command(queryId=hive_20210810085729_f9040af5-641f-4caf-b9ee-ff715fb6c328): load data inpath '/tmp/text_format.txt' into table text_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810085729_f9040af5-641f-4caf-b9ee-ff715fb6c328); Time taken: 0.115 seconds
+INFO  : Executing command(queryId=hive_20210810085729_f9040af5-641f-4caf-b9ee-ff715fb6c328): load data inpath '/tmp/text_format.txt' into table text_table
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.text_table from hdfs://sandbox-hdp.hortonworks.com:8020/tmp/text_format.txt
+INFO  : Starting task [Stage-1:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810085729_f9040af5-641f-4caf-b9ee-ff715fb6c328); Time taken: 2.095 seconds
+INFO  : OK
+No rows affected (2.698 seconds)
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from text_table;
+INFO  : Compiling command(queryId=hive_20210811041416_aa138396-ae92-4224-8b7b-4c02322bd5de): select * from text_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:text_table.c1, type:int, comment:null), FieldSchema(name:text_table.c2, type:int, comment:null), FieldSchema(name:text_table.c3, type:int, comment:null), FieldSchema(name:text_table.c4, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210811041416_aa138396-ae92-4224-8b7b-4c02322bd5de); Time taken: 15.759 seconds
+INFO  : Executing command(queryId=hive_20210811041416_aa138396-ae92-4224-8b7b-4c02322bd5de): select * from text_table
+INFO  : Completed executing command(queryId=hive_20210811041416_aa138396-ae92-4224-8b7b-4c02322bd5de); Time taken: 0.371 seconds
+INFO  : OK
++----------------+----------------+----------------+----------------+
+| text_table.c1  | text_table.c2  | text_table.c3  | text_table.c4  |
++----------------+----------------+----------------+----------------+
+| 3              | 6              | 7              | 9              |
+| 7              | 8              | 5              | 9              |
+| 88             | 44             | 99             | NULL           |
++----------------+----------------+----------------+----------------+
+3 rows selected (21.03 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> FROM text_table
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE seq_table SELECT *
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE rc_table SELECT *
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE prq_table SELECT *
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE orc_table SELECT *;
+INFO  : Compiling command(queryId=hive_20210811041452_94b54eec-cbf6-461f-b1a8-15573d3f4dd9): FROM text_table
+INSERT OVERWRITE TABLE seq_table SELECT *
+INSERT OVERWRITE TABLE rc_table SELECT *
+INSERT OVERWRITE TABLE prq_table SELECT *
+INSERT OVERWRITE TABLE orc_table SELECT *
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:text_table.c1, type:int, comment:null), FieldSchema(name:text_table.c2, type:int, comment:null), FieldSchema(name:text_table.c3, type:int, comment:null), FieldSchema(name:text_table.c4, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210811041452_94b54eec-cbf6-461f-b1a8-15573d3f4dd9); Time taken: 14.459 seconds
+INFO  : Executing command(queryId=hive_20210811041452_94b54eec-cbf6-461f-b1a8-15573d3f4dd9): FROM text_table
+INSERT OVERWRITE TABLE seq_table SELECT *
+INSERT OVERWRITE TABLE rc_table SELECT *
+INSERT OVERWRITE TABLE prq_table SELECT *
+INSERT OVERWRITE TABLE orc_table SELECT *
+INFO  : Query ID = hive_20210811041452_94b54eec-cbf6-461f-b1a8-15573d3f4dd9
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-4:MAPRED] in serial mode
+INFO  : Subscribed to counters: [] for queryId: hive_20210811041452_94b54eec-cbf6-461f-b1a8-15573d3f4dd9
+INFO  : Tez session hasn't been created yet. Opening session
+INFO  : Dag name: FROM text_table
+INSERT OVERWRITE TABLE s...* (Stage-4)
+INFO  : Status: Running (Executing on YARN cluster with App id application_1628651847826_0002)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 4 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 5 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 05/05  [==========================>>] 100%  ELAPSED TIME: 801.64 s
+----------------------------------------------------------------------------------------------
+INFO  : Status: DAG finished successfully in 799.88 seconds
+INFO  :
+INFO  : Query Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : OPERATION                            DURATION
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : Compile Query                          14.46s
+INFO  : Prepare Plan                          253.43s
+INFO  : Get Query Coordinator (AM)              0.03s
+INFO  : Submit Plan                            14.41s
+INFO  : Start DAG                              52.42s
+INFO  : Run DAG                               799.90s
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+INFO  : org.apache.tez.common.counters.DAGCounter:----------------------------------------------------
+INFO  :    NUM_SUCCEEDED_TASKS: 5.00         25,000          2,464               3                4
+INFO  :    TOTAL_LAUNCHED_TASKS: 500         13,580          1,603               1                0
+INFO  :    AM_CPU_MILLISECONDS: 62320        13,540            877               1                0
+INFO  :    AM_GC_TIME_MILLIS: 132900          1,810             34               1                0
+INFO  : File System Counters:4153.00         13,670          1,003               1                0
+INFO  :    FILE_BYTES_READ: 656-----------------------------------------------------------------------
+INFO  :    FILE_BYTES_WRITTEN: 656
+INFO  :    HDFS_BYTES_READ: 25
+INFO  :    HDFS_BYTES_WRITTEN: 3519
+INFO  :    HDFS_READ_OPS: 27
+INFO  :    HDFS_WRITE_OPS: 24
+INFO  :    HDFS_OP_CREATE: 16
+INFO  :    HDFS_OP_GET_FILE_STATUS: 26
+INFO  :    HDFS_OP_MKDIRS: 3
+INFO  :    HDFS_OP_OPEN: 1
+INFO  :    HDFS_OP_RENAME: 5
+INFO  : org.apache.tez.common.counters.TaskCounter:
+INFO  :    SPILLED_RECORDS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 4
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    GC_TIME_MILLIS: 5981
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 4 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 5 ...... container     SUCCEEDED      1          1        0        0       0       0
+INFO  :    TASK_DURATION_MILLIS: 859780
+INFO  :    CPU_MILLISECONDS: 67600
+INFO  :    PHYSICAL_MEMORY_BYTES: 1109393408
+INFO  :    VIRTUAL_MEMORY_BYTES: 11099828224
+INFO  :    COMMITTED_HEAP_BYTES: 1109393408
+INFO  :    INPUT_RECORDS_PROCESSED: 7
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 25
+INFO  :    OUTPUT_RECORDS: 4
+----------------------------------------------------------------------------------------------
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_BYTES: 512
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 544
+INFO  :    OUTPUT_BYTES_PHYSICAL: 624
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    SHUFFLE_BYTES: 528
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 544
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 528
+INFO  :    SHUFFLE_PHASE_TIME: 8731
+INFO  :    FIRST_EVENT_RECEIVED: 5628
+INFO  :    LAST_EVENT_RECEIVED: 5628
+INFO  : HIVE:
+INFO  :    CREATED_FILES: 8
+VERTICES: 05/05  [==========================>>] 100%  ELAPSED TIME: 810.60 s
+----------------------------------------------------------------------------------------------
+INFO  :    DESERIALIZE_ERRORS: 0
+INFO  :    RECORDS_IN_Map_1: 3
+INFO  :    RECORDS_OUT_0: 4
+INFO  :    RECORDS_OUT_1_ineuron_db.seq_table: 3
+INFO  :    RECORDS_OUT_2_ineuron_db.rc_table: 3
+INFO  :    RECORDS_OUT_3_ineuron_db.prq_table: 3
+INFO  :    RECORDS_OUT_4_ineuron_db.orc_table: 3
+INFO  :    RECORDS_OUT_INTERMEDIATE_Map_1: 4
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_2: 0
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_3: 0
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_4: 0
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_5: 0
+INFO  :    RECORDS_OUT_OPERATOR_FS_11: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_18: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_2: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_20: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_27: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_29: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_36: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_9: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_14: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_16: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_23: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_25: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_32: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_34: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_5: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_7: 1
+INFO  :    RECORDS_OUT_OPERATOR_MAP_0: 0
+INFO  :    RECORDS_OUT_OPERATOR_RS_15: 1
+INFO  :    RECORDS_OUT_OPERATOR_RS_24: 1
+INFO  :    RECORDS_OUT_OPERATOR_RS_33: 1
+INFO  :    RECORDS_OUT_OPERATOR_RS_6: 1
+INFO  :    RECORDS_OUT_OPERATOR_SEL_1: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_10: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_13: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_19: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_22: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_28: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_31: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_4: 3
+INFO  :    RECORDS_OUT_OPERATOR_TS_0: 3
+INFO  : TaskCounter_Map_1_INPUT_text_table:
+INFO  :    INPUT_RECORDS_PROCESSED: 3
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 25
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_2:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_3:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_4:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_5:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Reducer_2_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 948
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 948
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 1675
+INFO  : TaskCounter_Reducer_2_OUTPUT_out_Reducer_2:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : TaskCounter_Reducer_3_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 757
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 757
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 1535
+INFO  : TaskCounter_Reducer_3_OUTPUT_out_Reducer_3:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : TaskCounter_Reducer_4_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 3054
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 3054
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 3946
+INFO  : TaskCounter_Reducer_4_OUTPUT_out_Reducer_4:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : TaskCounter_Reducer_5_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 869
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 869
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+----------------------------------------------------------------------------------------------
+INFO  : Starting task [Stage-5:DEPENDENCY_COLLECTION] in serial mode PENDING  FAILED  KILLED
+INFO  : Starting task [Stage-0:MOVE] in serial mode-------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+INFO  : Starting task [Stage-6:STATS] in serial mode     1        0        0       0       0
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 4 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 5 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 05/05  [==========================>>] 100%  ELAPSED TIME: 910.77 s
+----------------------------------------------------------------------------------------------
+No rows affected (1245.626 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from rc_table;
+INFO  : Compiling command(queryId=hive_20210811043556_f9a1e7e9-4940-4920-ac70-c0359a99df41): select * from rc_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:rc_table.c1, type:int, comment:null), FieldSchema(name:rc_table.c2, type:int, comment:null), FieldSchema(name:rc_table.c3, type:int, comment:null), FieldSchema(name:rc_table.c4, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210811043556_f9a1e7e9-4940-4920-ac70-c0359a99df41); Time taken: 4.196 seconds
+INFO  : Executing command(queryId=hive_20210811043556_f9a1e7e9-4940-4920-ac70-c0359a99df41): select * from rc_table
+INFO  : Completed executing command(queryId=hive_20210811043556_f9a1e7e9-4940-4920-ac70-c0359a99df41); Time taken: 0.047 seconds
+INFO  : OK
++--------------+--------------+--------------+--------------+
+| rc_table.c1  | rc_table.c2  | rc_table.c3  | rc_table.c4  |
++--------------+--------------+--------------+--------------+
+| 3            | 6            | 7            | 9            |
+| 7            | 8            | 5            | 9            |
+| 88           | 44           | 99           | NULL         |
++--------------+--------------+--------------+--------------+
+3 rows selected (5.954 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from prq_table;
+INFO  : Compiling command(queryId=hive_20210811043619_01e680ad-44d6-43e4-a060-d73d8b82763b): select * from prq_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:prq_table.c1, type:int, comment:null), FieldSchema(name:prq_table.c2, type:int, comment:null), FieldSchema(name:prq_table.c3, type:int, comment:null), FieldSchema(name:prq_table.c4, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210811043619_01e680ad-44d6-43e4-a060-d73d8b82763b); Time taken: 0.706 seconds
+INFO  : Executing command(queryId=hive_20210811043619_01e680ad-44d6-43e4-a060-d73d8b82763b): select * from prq_table
+INFO  : Completed executing command(queryId=hive_20210811043619_01e680ad-44d6-43e4-a060-d73d8b82763b); Time taken: 0.037 seconds
+INFO  : OK
++---------------+---------------+---------------+---------------+
+| prq_table.c1  | prq_table.c2  | prq_table.c3  | prq_table.c4  |
++---------------+---------------+---------------+---------------+
+| 3             | 6             | 7             | 9             |
+| 7             | 8             | 5             | 9             |
+| 88            | 44            | 99            | NULL          |
++---------------+---------------+---------------+---------------+
+3 rows selected (5.23 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from orc_table;
+INFO  : Compiling command(queryId=hive_20210811043631_aa904b4a-230e-49d7-be74-e9597a783124): select * from orc_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:orc_table.c1, type:int, comment:null), FieldSchema(name:orc_table.c2, type:int, comment:null), FieldSchema(name:orc_table.c3, type:int, comment:null), FieldSchema(name:orc_table.c4, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210811043631_aa904b4a-230e-49d7-be74-e9597a783124); Time taken: 0.51 seconds
+INFO  : Executing command(queryId=hive_20210811043631_aa904b4a-230e-49d7-be74-e9597a783124): select * from orc_table
+INFO  : Completed executing command(queryId=hive_20210811043631_aa904b4a-230e-49d7-be74-e9597a783124); Time taken: 0.012 seconds
+INFO  : OK
++---------------+---------------+---------------+---------------+
+| orc_table.c1  | orc_table.c2  | orc_table.c3  | orc_table.c4  |
++---------------+---------------+---------------+---------------+
+| 3             | 6             | 7             | 9             |
+| 7             | 8             | 5             | 9             |
+| 88            | 44            | 99            | NULL          |
++---------------+---------------+---------------+---------------+
+3 rows selected (1.725 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from seq_table;
+INFO  : Compiling command(queryId=hive_20210811043700_0a0e8c35-ff5d-451b-9f6f-4772f0d429fe): select * from seq_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:seq_table.c1, type:int, comment:null), FieldSchema(name:seq_table.c2, type:int, comment:null), FieldSchema(name:seq_table.c3, type:int, comment:null), FieldSchema(name:seq_table.c4, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210811043700_0a0e8c35-ff5d-451b-9f6f-4772f0d429fe); Time taken: 0.548 seconds
+INFO  : Executing command(queryId=hive_20210811043700_0a0e8c35-ff5d-451b-9f6f-4772f0d429fe): select * from seq_table
+INFO  : Completed executing command(queryId=hive_20210811043700_0a0e8c35-ff5d-451b-9f6f-4772f0d429fe); Time taken: 0.011 seconds
+INFO  : OK
++---------------+---------------+---------------+---------------+
+| seq_table.c1  | seq_table.c2  | seq_table.c3  | seq_table.c4  |
++---------------+---------------+---------------+---------------+
+| 3             | 6             | 7             | 9             |
+| 7             | 8             | 5             | 9             |
+| 88            | 44            | 99            | NULL          |
++---------------+---------------+---------------+---------------+
+3 rows selected (0.976 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+
+
+
+drwxrwxrwx+  - hive hadoop          0 2021-08-11 04:35 /warehouse/tablespace/managed/hive/ineuron_db.db/orc_table
+drwxrwxrwx+  - hive hadoop          0 2021-08-11 04:35 /warehouse/tablespace/managed/hive/ineuron_db.db/prq_table
+drwxrwxrwx+  - hive hadoop          0 2021-08-11 04:35 /warehouse/tablespace/managed/hive/ineuron_db.db/rc_table
+drwxrwxrwx+  - hive hadoop          0 2021-08-11 04:35 /warehouse/tablespace/managed/hive/ineuron_db.db/seq_table
+drwxrwxrwx+  - hive hadoop          0 2021-08-10 08:57 /warehouse/tablespace/managed/hive/ineuron_db.db/text_table
+
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> SET hive.exec.compress.output=true;
+No rows affected (0.015 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> SET mapred.max.split.size=256000000;
+No rows affected (0.098 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> SET mapred.output.compression.type=BLOCK; -- block compression for sequence file
+No rows affected (0.053 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> SET mapred.output.compression.codec=org.apache.hadoop.io.compress.SnappyCodec;
+No rows affected (0.037 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> FROM text_table
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE seq_table SELECT *
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE rc_table SELECT *
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE prq_table SELECT *
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE orc_table SELECT *;
+INFO  : Compiling command(queryId=hive_20210811055407_6e28ab28-7b11-4e42-a182-e145a38944e6): FROM text_table
+INSERT OVERWRITE TABLE seq_table SELECT *
+INSERT OVERWRITE TABLE rc_table SELECT *
+INSERT OVERWRITE TABLE prq_table SELECT *
+INSERT OVERWRITE TABLE orc_table SELECT *
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:text_table.c1, type:int, comment:null), FieldSchema(name:text_table.c2, type:int, comment:null), FieldSchema(name:text_table.c3, type:int, comment:null), FieldSchema(name:text_table.c4, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210811055407_6e28ab28-7b11-4e42-a182-e145a38944e6); Time taken: 25.511 seconds
+INFO  : Executing command(queryId=hive_20210811055407_6e28ab28-7b11-4e42-a182-e145a38944e6): FROM text_table
+INSERT OVERWRITE TABLE seq_table SELECT *
+INSERT OVERWRITE TABLE rc_table SELECT *
+INSERT OVERWRITE TABLE prq_table SELECT *
+INSERT OVERWRITE TABLE orc_table SELECT *
+INFO  : Query ID = hive_20210811055407_6e28ab28-7b11-4e42-a182-e145a38944e6
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-4:MAPRED] in serial mode
+INFO  : Subscribed to counters: [] for queryId: hive_20210811055407_6e28ab28-7b11-4e42-a182-e145a38944e6
+INFO  : Tez session hasn't been created yet. Opening session
+INFO  : Dag name: FROM text_table
+INSERT OVERWRITE TABLE s...* (Stage-4)
+INFO  : Status: Running (Executing on YARN cluster with App id application_1628651847826_0003)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 4 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 5 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 05/05  [==========================>>] 100%  ELAPSED TIME: 603.89 s
+----------------------------------------------------------------------------------------------
+INFO  : Status: DAG finished successfully in 602.07 seconds
+INFO  :
+INFO  : Query Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : OPERATION                            DURATION
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : Compile Query                          25.51s
+INFO  : Prepare Plan                          766.15s
+INFO  : Get Query Coordinator (AM)              0.06s
+INFO  : Submit Plan                            88.41s
+INFO  : Start DAG                              28.13s
+INFO  : Run DAG                               602.25s
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : Task Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :   VERTICES      DURATION(ms)   CPU_TIME(ms)    GC_TIME(ms)   INPUT_RECORDS   OUTPUT_RECORDS
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :      Map 1         222625.00         22,030          2,306               3                4
+INFO  :  Reducer 2          49833.00         10,400            906               1                0
+INFO  :  Reducer 3          49833.00         10,640            751               1                0
+INFO  :  Reducer 4          49833.00         10,420          1,056               1                0
+INFO  :  Reducer 5           1074.00          1,060             63               1                0
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : org.apache.tez.common.counters.DAGCounter:
+INFO  :    NUM_SUCCEEDED_TASKS: 5
+INFO  :    TOTAL_LAUNCHED_TASKS: 5
+INFO  :    AM_CPU_MILLISECONDS: 41760
+INFO  :    AM_GC_TIME_MILLIS: 1488
+INFO  : File System Counters:
+INFO  :    FILE_BYTES_READ: 656
+INFO  :    FILE_BYTES_WRITTEN: 656
+INFO  :    HDFS_BYTES_READ: 25
+INFO  :    HDFS_BYTES_WRITTEN: 3981
+INFO  :    HDFS_READ_OPS: 27
+INFO  :    HDFS_WRITE_OPS: 24
+INFO  :    HDFS_OP_CREATE: 16
+INFO  :    HDFS_OP_GET_FILE_STATUS: 26
+INFO  :    HDFS_OP_MKDIRS: 3
+INFO  :    HDFS_OP_OPEN: 1
+INFO  :    HDFS_OP_RENAME: 5
+INFO  : org.apache.tez.common.counters.TaskCounter:
+INFO  :    SPILLED_RECORDS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 4
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    GC_TIME_MILLIS: 5082
+INFO  :    TASK_DURATION_MILLIS: 373558
+INFO  :    CPU_MILLISECONDS: 54550
+INFO  :    PHYSICAL_MEMORY_BYTES: 1351614464
+INFO  :    VIRTUAL_MEMORY_BYTES: 11085213696
+INFO  :    COMMITTED_HEAP_BYTES: 1351614464
+INFO  :    INPUT_RECORDS_PROCESSED: 7
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 25
+INFO  :    OUTPUT_RECORDS: 4
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_BYTES: 512
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 544
+INFO  :    OUTPUT_BYTES_PHYSICAL: 624
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    SHUFFLE_BYTES: 528
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 544
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 528
+INFO  :    SHUFFLE_PHASE_TIME: 2584
+INFO  :    FIRST_EVENT_RECEIVED: 1304
+INFO  :    LAST_EVENT_RECEIVED: 1304
+INFO  : HIVE:
+INFO  :    CREATED_FILES: 8
+INFO  :    DESERIALIZE_ERRORS: 0
+INFO  :    RECORDS_IN_Map_1: 3
+INFO  :    RECORDS_OUT_0: 4
+INFO  :    RECORDS_OUT_1_ineuron_db.seq_table: 3
+INFO  :    RECORDS_OUT_2_ineuron_db.rc_table: 3
+INFO  :    RECORDS_OUT_3_ineuron_db.prq_table: 3
+INFO  :    RECORDS_OUT_4_ineuron_db.orc_table: 3
+INFO  :    RECORDS_OUT_INTERMEDIATE_Map_1: 4
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_2: 0
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_3: 0
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_4: 0
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_5: 0
+INFO  :    RECORDS_OUT_OPERATOR_FS_11: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_18: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_2: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_20: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_27: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_29: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_36: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_9: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_14: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_16: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_23: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_25: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_32: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_34: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_5: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_7: 1
+INFO  :    RECORDS_OUT_OPERATOR_MAP_0: 0
+INFO  :    RECORDS_OUT_OPERATOR_RS_15: 1
+INFO  :    RECORDS_OUT_OPERATOR_RS_24: 1
+INFO  :    RECORDS_OUT_OPERATOR_RS_33: 1
+INFO  :    RECORDS_OUT_OPERATOR_RS_6: 1
+INFO  :    RECORDS_OUT_OPERATOR_SEL_1: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_10: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_13: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_19: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_22: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_28: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_31: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_4: 3
+INFO  :    RECORDS_OUT_OPERATOR_TS_0: 3
+INFO  : TaskCounter_Map_1_INPUT_text_table:
+INFO  :    INPUT_RECORDS_PROCESSED: 3
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 25
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_2:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_3:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_4:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_5:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Reducer_2_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 275
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 275
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 671
+INFO  : TaskCounter_Reducer_2_OUTPUT_out_Reducer_2:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : TaskCounter_Reducer_3_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 529
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 529
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 959
+INFO  : TaskCounter_Reducer_3_OUTPUT_out_Reducer_3:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : TaskCounter_Reducer_4_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 301
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 301
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 680
+INFO  : TaskCounter_Reducer_4_OUTPUT_out_Reducer_4:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : TaskCounter_Reducer_5_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 199
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 199
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 4 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 5 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 05/05  [==========================>>] 100%  ELAPSED TIME: 680.94 s
+----------------------------------------------------------------------------------------------
+INFO  : Starting task [Stage-8:STATS] in serial mode
+INFO  : Starting task [Stage-9:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210811055407_6e28ab28-7b11-4e42-a182-e145a38944e6); Time taken: 1560.605 seconds
+INFO  : OK
+No rows affected (1589.439 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> FROM text_table
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE seq_table SELECT *
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE rc_table SELECT *
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE prq_table SELECT *
+. . . . . . . . . . . . . . . . . . . . . . .> INSERT OVERWRITE TABLE orc_table SELECT *;
+INFO  : Compiling command(queryId=hive_20210811062038_f98a95f4-5bbc-4956-b38d-bb4247b809f4): FROM text_table
+INSERT OVERWRITE TABLE seq_table SELECT *
+INSERT OVERWRITE TABLE rc_table SELECT *
+INSERT OVERWRITE TABLE prq_table SELECT *
+INSERT OVERWRITE TABLE orc_table SELECT *
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:text_table.c1, type:int, comment:null), FieldSchema(name:text_table.c2, type:int, comment:null), FieldSchema(name:text_table.c3, type:int, comment:null), FieldSchema(name:text_table.c4, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210811062038_f98a95f4-5bbc-4956-b38d-bb4247b809f4); Time taken: 4.196 seconds
+INFO  : Executing command(queryId=hive_20210811062038_f98a95f4-5bbc-4956-b38d-bb4247b809f4): FROM text_table
+INSERT OVERWRITE TABLE seq_table SELECT *
+INSERT OVERWRITE TABLE rc_table SELECT *
+INSERT OVERWRITE TABLE prq_table SELECT *
+INSERT OVERWRITE TABLE orc_table SELECT *
+INFO  : Query ID = hive_20210811062038_f98a95f4-5bbc-4956-b38d-bb4247b809f4
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-4:MAPRED] in serial mode
+INFO  : Subscribed to counters: [] for queryId: hive_20210811062038_f98a95f4-5bbc-4956-b38d-bb4247b809f4
+INFO  : Session is already open
+INFO  : Dag name: FROM text_table
+INSERT OVERWRITE TABLE s...* (Stage-4)
+INFO  : Status: Running (Executing on YARN cluster with App id application_1628651847826_0003)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 4 ...... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 5 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 05/05  [==========================>>] 100%  ELAPSED TIME: 258.58 s
+----------------------------------------------------------------------------------------------
+INFO  : Status: DAG finished successfully in 205.97 seconds
+INFO  :
+INFO  : Query Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : OPERATION                            DURATION
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : Compile Query                           4.20s
+INFO  : Prepare Plan                            3.45s
+INFO  : Get Query Coordinator (AM)              0.00s
+INFO  : Submit Plan                             1.47s
+INFO  : Start DAG                               0.65s
+INFO  : Run DAG                               205.97s
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : Task Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :   VERTICES      DURATION(ms)   CPU_TIME(ms)    GC_TIME(ms)   INPUT_RECORDS   OUTPUT_RECORDS
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :      Map 1          23861.00         10,610            652               3                4
+INFO  :  Reducer 2         122607.00         13,650            700               1                0
+INFO  :  Reducer 3         122607.00         14,000            533               1                0
+INFO  :  Reducer 4         122607.00         13,350            779               1                0
+INFO  :  Reducer 5           3891.00          1,260              0               1                0
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : org.apache.tez.common.counters.DAGCounter:
+INFO  :    NUM_SUCCEEDED_TASKS: 5
+INFO  :    TOTAL_LAUNCHED_TASKS: 5
+INFO  :    AM_CPU_MILLISECONDS: 15980
+INFO  :    AM_GC_TIME_MILLIS: 2468
+INFO  : File System Counters:
+INFO  :    FILE_BYTES_READ: 656
+INFO  :    FILE_BYTES_WRITTEN: 656
+INFO  :    HDFS_BYTES_READ: 25
+INFO  :    HDFS_BYTES_WRITTEN: 3985
+INFO  :    HDFS_READ_OPS: 27
+INFO  :    HDFS_WRITE_OPS: 24
+INFO  :    HDFS_OP_CREATE: 16
+INFO  :    HDFS_OP_GET_FILE_STATUS: 26
+INFO  :    HDFS_OP_MKDIRS: 3
+INFO  :    HDFS_OP_OPEN: 1
+INFO  :    HDFS_OP_RENAME: 5
+INFO  : org.apache.tez.common.counters.TaskCounter:
+INFO  :    SPILLED_RECORDS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 4
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    GC_TIME_MILLIS: 2664
+INFO  :    TASK_DURATION_MILLIS: 393463
+INFO  :    CPU_MILLISECONDS: 52870
+INFO  :    PHYSICAL_MEMORY_BYTES: 1693450240
+INFO  :    VIRTUAL_MEMORY_BYTES: 11044659200
+INFO  :    COMMITTED_HEAP_BYTES: 1693450240
+INFO  :    INPUT_RECORDS_PROCESSED: 7
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 25
+INFO  :    OUTPUT_RECORDS: 4
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_BYTES: 512
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 544
+INFO  :    OUTPUT_BYTES_PHYSICAL: 624
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    SHUFFLE_BYTES: 528
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 544
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 528
+INFO  :    SHUFFLE_PHASE_TIME: 3295
+INFO  :    FIRST_EVENT_RECEIVED: 2109
+INFO  :    LAST_EVENT_RECEIVED: 2109
+INFO  : HIVE:
+INFO  :    CREATED_FILES: 8
+INFO  :    DESERIALIZE_ERRORS: 0
+INFO  :    RECORDS_IN_Map_1: 3
+INFO  :    RECORDS_OUT_0: 4
+INFO  :    RECORDS_OUT_1_ineuron_db.seq_table: 3
+INFO  :    RECORDS_OUT_2_ineuron_db.rc_table: 3
+INFO  :    RECORDS_OUT_3_ineuron_db.prq_table: 3
+INFO  :    RECORDS_OUT_4_ineuron_db.orc_table: 3
+INFO  :    RECORDS_OUT_INTERMEDIATE_Map_1: 4
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_2: 0
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_3: 0
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_4: 0
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_5: 0
+INFO  :    RECORDS_OUT_OPERATOR_FS_11: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_18: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_2: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_20: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_27: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_29: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_36: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_9: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_14: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_16: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_23: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_25: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_32: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_34: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_5: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_7: 1
+INFO  :    RECORDS_OUT_OPERATOR_MAP_0: 0
+INFO  :    RECORDS_OUT_OPERATOR_RS_15: 1
+INFO  :    RECORDS_OUT_OPERATOR_RS_24: 1
+INFO  :    RECORDS_OUT_OPERATOR_RS_33: 1
+INFO  :    RECORDS_OUT_OPERATOR_RS_6: 1
+INFO  :    RECORDS_OUT_OPERATOR_SEL_1: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_10: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_13: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_19: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_22: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_28: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_31: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_4: 3
+INFO  :    RECORDS_OUT_OPERATOR_TS_0: 3
+INFO  : TaskCounter_Map_1_INPUT_text_table:
+INFO  :    INPUT_RECORDS_PROCESSED: 3
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 25
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_2:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_3:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_4:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_5:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 128
+INFO  :    OUTPUT_BYTES_PHYSICAL: 156
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 136
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Reducer_2_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 295
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 295
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 690
+INFO  : TaskCounter_Reducer_2_OUTPUT_out_Reducer_2:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : TaskCounter_Reducer_3_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 427
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 427
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 788
+INFO  : TaskCounter_Reducer_3_OUTPUT_out_Reducer_3:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : TaskCounter_Reducer_4_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 649
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 649
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 818
+INFO  : TaskCounter_Reducer_4_OUTPUT_out_Reducer_4:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : TaskCounter_Reducer_5_INPUT_Map_1:
+INFO  :    FIRST_EVENT_RECEIVED: 738
+INFO  :    INPUT_RECORDS_PROCESSED: 1
+INFO  :    LAST_EVENT_RECEIVED: 738
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    SHUFFLE_BYTES: 132
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 136
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 132
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 999
+INFO  : TaskCounter_Reducer_5_OUTPUT_out_Reducer_5:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : org.apache.hadoop.hive.ql.exec.tez.HiveInputCounters:
+INFO  :    GROUPED_INPUT_SPLITS_Map_1: 1
+INFO  :    INPUT_DIRECTORIES_Map_1: 1
+INFO  :    INPUT_FILES_Map_1: 1
+INFO  :    RAW_INPUT_SPLITS_Map_1: 1
+INFO  : Starting task [Stage-5:DEPENDENCY_COLLECTION] in serial mode
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.seq_table from hdfs://sandbox-hdp.hortonworks.com:8020/warehouse/tablespace/managed/hive/ineuron_db.db/seq_table
+INFO  : Starting task [Stage-1:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.rc_table from hdfs://sandbox-hdp.hortonworks.com:8020/warehouse/tablespace/managed/hive/ineuron_db.db/rc_table
+INFO  : Starting task [Stage-2:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.prq_table from hdfs://sandbox-hdp.hortonworks.com:8020/warehouse/tablespace/managed/hive/ineuron_db.db/prq_table
+INFO  : Starting task [Stage-3:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.orc_table from hdfs://sandbox-hdp.hortonworks.com:8020/warehouse/tablespace/managed/hive/ineuron_db.db/orc_table/.hive-staging_hive_2021-08-11_06-20-39_609_688949247025373731-1/-ext-10003
+INFO  : Starting task [Stage-6:STATS] in serial mode
+INFO  : Starting task [Stage-7:STATS] in serial mode
+INFO  : Starting task [Stage-8:STATS] in serial mode
+INFO  : Starting task [Stage-9:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210811062038_f98a95f4-5bbc-4956-b38d-bb4247b809f4); Time taken: 261.854 seconds
+INFO  : OK
+No rows affected (268.632 seconds)

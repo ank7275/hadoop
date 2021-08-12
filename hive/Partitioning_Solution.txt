@@ -1,0 +1,546 @@
+
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> CREATE TABLE emp_details(emp_name string,unit string,exp int,location string)
+. . . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+. . . . . . . . . . . . . . . . . . . . . . .> WITH SERDEPROPERTIES (
+. . . . . . . . . . . . . . . . . . . . . . .>     "separatorChar" = ",",
+. . . . . . . . . . . . . . . . . . . . . . .>     "quoteChar"     = "\"",
+. . . . . . . . . . . . . . . . . . . . . . .>     "escapeChar"    = "\\"
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> STORED AS TEXTFILE;
+INFO  : Compiling command(queryId=hive_20210810054926_5841d057-7c6e-4f02-be7c-58a3f463e27d): CREATE TABLE emp_details(emp_name string,unit string,exp int,location string)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+"separatorChar" = ",",
+"quoteChar"     = "\"",
+"escapeChar"    = "\\"
+)
+STORED AS TEXTFILE
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810054926_5841d057-7c6e-4f02-be7c-58a3f463e27d); Time taken: 0.64 seconds
+INFO  : Executing command(queryId=hive_20210810054926_5841d057-7c6e-4f02-be7c-58a3f463e27d): CREATE TABLE emp_details(emp_name string,unit string,exp int,location string)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+"separatorChar" = ",",
+"quoteChar"     = "\"",
+"escapeChar"    = "\\"
+)
+STORED AS TEXTFILE
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810054926_5841d057-7c6e-4f02-be7c-58a3f463e27d); Time taken: 1.162 seconds
+INFO  : OK
+No rows affected (2.208 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> load data inpath '/tmp/emp_details.csv' into table emp_details;
+INFO  : Compiling command(queryId=hive_20210810055457_db5ccf82-7e15-4300-aaef-ec3fea653fe7): load data inpath '/tmp/emp_details.csv' into table emp_details
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810055457_db5ccf82-7e15-4300-aaef-ec3fea653fe7); Time taken: 0.399 seconds
+INFO  : Executing command(queryId=hive_20210810055457_db5ccf82-7e15-4300-aaef-ec3fea653fe7): load data inpath '/tmp/emp_details.csv' into table emp_details
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.emp_details from hdfs://sandbox-hdp.hortonworks.com:8020/tmp/emp_details.csv
+INFO  : Starting task [Stage-1:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810055457_db5ccf82-7e15-4300-aaef-ec3fea653fe7); Time taken: 2.428 seconds
+INFO  : OK
+No rows affected (2.979 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from emp_details;
+INFO  : Compiling command(queryId=hive_20210810055508_2d82a1f6-1296-408c-a7ab-396a6db3e879): select * from emp_details
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:emp_details.emp_name, type:string, comment:null), FieldSchema(name:emp_details.unit, type:string, comment:null), FieldSchema(name:emp_details.exp, type:string, comment:null), FieldSchema(name:emp_details.location, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810055508_2d82a1f6-1296-408c-a7ab-396a6db3e879); Time taken: 0.648 seconds
+INFO  : Executing command(queryId=hive_20210810055508_2d82a1f6-1296-408c-a7ab-396a6db3e879): select * from emp_details
+INFO  : Completed executing command(queryId=hive_20210810055508_2d82a1f6-1296-408c-a7ab-396a6db3e879); Time taken: 0.028 seconds
+INFO  : OK
++-----------------------+-------------------+------------------+-----------------------+
+| emp_details.emp_name  | emp_details.unit  | emp_details.exp  | emp_details.location  |
++-----------------------+-------------------+------------------+-----------------------+
+| Ankit                 | 45                | 2                | pune                  |
+| saurav                | 56                | 10               | bangalore             |
+| sachin                | 44                | 5                | bangalore             |
+| ravi                  | 43                | 2                | chennai               |
+| amar                  | 88                | 4                | pune                  |
+| milind                | 89                | 4                | pune                  |
++-----------------------+-------------------+------------------+-----------------------+
+6 rows selected (1.38 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> describe formatted emp_details;
+INFO  : Compiling command(queryId=hive_20210810055538_36576268-557b-4d70-b749-0fd09e0c00e5): describe formatted emp_details
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:col_name, type:string, comment:from deserializer), FieldSchema(name:data_type, type:string, comment:from deserializer), FieldSchema(name:comment, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810055538_36576268-557b-4d70-b749-0fd09e0c00e5); Time taken: 0.783 seconds
+INFO  : Executing command(queryId=hive_20210810055538_36576268-557b-4d70-b749-0fd09e0c00e5): describe formatted emp_details
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810055538_36576268-557b-4d70-b749-0fd09e0c00e5); Time taken: 2.447 seconds
+INFO  : OK
++-------------------------------+----------------------------------------------------+-----------------------+
+|           col_name            |                     data_type                      |        comment        |
++-------------------------------+----------------------------------------------------+-----------------------+
+| # col_name                    | data_type                                          | comment               |
+| emp_name                      | string                                             | from deserializer     |
+| unit                          | string                                             | from deserializer     |
+| exp                           | string                                             | from deserializer     |
+| location                      | string                                             | from deserializer     |
+|                               | NULL                                               | NULL                  |
+| # Detailed Table Information  | NULL                                               | NULL                  |
+| Database:                     | ineuron_db                                         | NULL                  |
+| OwnerType:                    | USER                                               | NULL                  |
+| Owner:                        | hive                                               | NULL                  |
+| CreateTime:                   | Tue Aug 10 05:49:27 UTC 2021                       | NULL                  |
+| LastAccessTime:               | UNKNOWN                                            | NULL                  |
+| Retention:                    | 0                                                  | NULL                  |
+| Location:                     | hdfs://sandbox-hdp.hortonworks.com:8020/warehouse/tablespace/managed/hive/ineuron_db.db/emp_details | NULL                  |
+| Table Type:                   | MANAGED_TABLE                                      | NULL                  |
+| Table Parameters:             | NULL                                               | NULL                  |
+|                               | bucketing_version                                  | 2                     |
+|                               | numFiles                                           | 1                     |
+|                               | numRows                                            | 0                     |
+|                               | rawDataSize                                        | 0                     |
+|                               | totalSize                                          | 111                   |
+|                               | transactional                                      | true                  |
+|                               | transactional_properties                           | insert_only           |
+|                               | transient_lastDdlTime                              | 1628574899            |
+|                               | NULL                                               | NULL                  |
+| # Storage Information         | NULL                                               | NULL                  |
+| SerDe Library:                | org.apache.hadoop.hive.serde2.OpenCSVSerde         | NULL                  |
+| InputFormat:                  | org.apache.hadoop.mapred.TextInputFormat           | NULL                  |
+| OutputFormat:                 | org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat | NULL                  |
+| Compressed:                   | No                                                 | NULL                  |
+| Num Buckets:                  | -1                                                 | NULL                  |
+| Bucket Columns:               | []                                                 | NULL                  |
+| Sort Columns:                 | []                                                 | NULL                  |
+| Storage Desc Params:          | NULL                                               | NULL                  |
+|                               | escapeChar                                         | \\                    |
+|                               | quoteChar                                          | \"                    |
+|                               | separatorChar                                      | ,                     |
+|                               | serialization.format                               | 1                     |
++-------------------------------+----------------------------------------------------+-----------------------+
+
+38 rows selected (3.743 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> create table emp_details_partitioned
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> emp_name string,
+. . . . . . . . . . . . . . . . . . . . . . .> unit string,
+. . . . . . . . . . . . . . . . . . . . . . .> exp int
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> partitioned by (location string);
+INFO  : Compiling command(queryId=hive_20210810055752_693fdab5-920b-4880-a28b-2fd50f5045c0): create table emp_details_partitioned
+(
+emp_name string,
+unit string,
+exp int
+)
+partitioned by (location string)
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810055752_693fdab5-920b-4880-a28b-2fd50f5045c0); Time taken: 4.069 seconds
+INFO  : Executing command(queryId=hive_20210810055752_693fdab5-920b-4880-a28b-2fd50f5045c0): create table emp_details_partitioned
+(
+emp_name string,
+unit string,
+exp int
+)
+partitioned by (location string)
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810055752_693fdab5-920b-4880-a28b-2fd50f5045c0); Time taken: 2.579 seconds
+INFO  : OK
+No rows affected (9.869 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> insert overwrite table emp_details_partitioned
+. . . . . . . . . . . . . . . . . . . . . . .> partition(location = 'pune')
+. . . . . . . . . . . . . . . . . . . . . . .> select emp_name, unit, exp from emp_details
+. . . . . . . . . . . . . . . . . . . . . . .> where location = 'pune';
+INFO  : Compiling command(queryId=hive_20210810055831_0493e2c5-4b84-4903-833c-4c3baac16efd): insert overwrite table emp_details_partitioned
+partition(location = 'pune')
+select emp_name, unit, exp from emp_details
+where location = 'pune'
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_col0, type:string, comment:null), FieldSchema(name:_col1, type:string, comment:null), FieldSchema(name:_col2, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810055831_0493e2c5-4b84-4903-833c-4c3baac16efd); Time taken: 55.724 seconds
+INFO  : Executing command(queryId=hive_20210810055831_0493e2c5-4b84-4903-833c-4c3baac16efd): insert overwrite table emp_details_partitioned
+partition(location = 'pune')
+select emp_name, unit, exp from emp_details
+where location = 'pune'
+INFO  : Query ID = hive_20210810055831_0493e2c5-4b84-4903-833c-4c3baac16efd
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Subscribed to counters: [] for queryId: hive_20210810055831_0493e2c5-4b84-4903-833c-4c3baac16efd
+INFO  : Session is already open
+INFO  : Dag name: insert overwrite table emp_details_...'pune' (Stage-1)
+INFO  : Tez session was closed. Reopening...
+INFO  : Session re-established.
+INFO  : Session re-established.
+INFO  : Status: Running (Executing on YARN cluster with App id application_1628559691397_0006)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 229.37 s
+----------------------------------------------------------------------------------------------
+INFO  : Status: DAG finished successfully in 188.96 seconds
+INFO  :
+INFO  : Query Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : OPERATION                            DURATION
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : Compile Query                          55.72s
+INFO  : Prepare Plan                            1.05s
+INFO  : Get Query Coordinator (AM)              0.00s
+INFO  : Submit Plan                            15.97s
+INFO  : Start DAG                               2.38s
+INFO  : Run DAG                               188.96s
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : Task Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :   VERTICES      DURATION(ms)   CPU_TIME(ms)    GC_TIME(ms)   INPUT_RECORDS   OUTPUT_RECORDS
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :      Map 1         162799.00         17,980          2,479               6                1
+INFO  :  Reducer 2          20845.00          7,860            440               1                0
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : org.apache.tez.common.counters.DAGCounter:
+INFO  :    NUM_SUCCEEDED_TASKS: 3
+INFO  :    TOTAL_LAUNCHED_TASKS: 3
+INFO  :    AM_CPU_MILLISECONDS: 20030
+INFO  :    AM_GC_TIME_MILLIS: 541
+INFO  : File System Counters:
+INFO  :    FILE_BYTES_READ: 288
+INFO  :    FILE_BYTES_WRITTEN: 176
+INFO  :    HDFS_BYTES_READ: 111
+INFO  :    HDFS_BYTES_WRITTEN: 1198
+INFO  :    HDFS_READ_OPS: 9
+INFO  :    HDFS_WRITE_OPS: 6
+INFO  :    HDFS_OP_CREATE: 4
+INFO  :    HDFS_OP_GET_FILE_STATUS: 8
+INFO  :    HDFS_OP_OPEN: 1
+INFO  :    HDFS_OP_RENAME: 2
+INFO  : org.apache.tez.common.counters.TaskCounter:
+INFO  :    REDUCE_INPUT_GROUPS: 1
+INFO  :    REDUCE_INPUT_RECORDS: 1
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    SPILLED_RECORDS: 2
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    NUM_SKIPPED_INPUTS: 1
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    MERGED_MAP_OUTPUTS: 1
+INFO  :    GC_TIME_MILLIS: 2919
+INFO  :    TASK_DURATION_MILLIS: 177183
+INFO  :    CPU_MILLISECONDS: 25840
+INFO  :    PHYSICAL_MEMORY_BYTES: 867172352
+INFO  :    VIRTUAL_MEMORY_BYTES: 6673428480
+INFO  :    COMMITTED_HEAP_BYTES: 867172352
+INFO  :    INPUT_RECORDS_PROCESSED: 6
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 111
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_BYTES: 112
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 120
+INFO  :    OUTPUT_BYTES_PHYSICAL: 120
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 120
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SHUFFLE_BYTES: 120
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 120
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 120
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    SHUFFLE_PHASE_TIME: 1704
+INFO  :    MERGE_PHASE_TIME: 3322
+INFO  :    FIRST_EVENT_RECEIVED: 1576
+INFO  :    LAST_EVENT_RECEIVED: 1576
+INFO  : HIVE:
+INFO  :    CREATED_FILES: 2
+INFO  :    DESERIALIZE_ERRORS: 0
+INFO  :    RECORDS_IN_Map_1: 6
+INFO  :    RECORDS_OUT_0: 1
+INFO  :    RECORDS_OUT_1_ineuron_db.emp_details_partitioned: 3
+INFO  :    RECORDS_OUT_INTERMEDIATE_Map_1: 1
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_2: 0
+INFO  :    RECORDS_OUT_OPERATOR_FIL_12: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_11: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_4: 3
+INFO  :    RECORDS_OUT_OPERATOR_GBY_7: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_9: 1
+INFO  :    RECORDS_OUT_OPERATOR_MAP_0: 0
+INFO  :    RECORDS_OUT_OPERATOR_RS_8: 1
+INFO  :    RECORDS_OUT_OPERATOR_SEL_10: 1
+INFO  :    RECORDS_OUT_OPERATOR_SEL_2: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_6: 3
+INFO  :    RECORDS_OUT_OPERATOR_TS_0: 6
+INFO  : Shuffle Errors:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : Shuffle Errors_Reducer_2_INPUT_Map_1:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : TaskCounter_Map_1_INPUT_emp_details:
+INFO  :    INPUT_RECORDS_PROCESSED: 6
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 111
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_2:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 112
+INFO  :    OUTPUT_BYTES_PHYSICAL: 120
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 120
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 1
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SPILLED_RECORDS: 1
+INFO  : TaskCounter_Reducer_2_INPUT_Map_1:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 120
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    FIRST_EVENT_RECEIVED: 1576
+INFO  :    LAST_EVENT_RECEIVED: 1576
+INFO  :    MERGED_MAP_OUTPUTS: 1
+INFO  :    MERGE_PHASE_TIME: 3322
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 1
+INFO  :    NUM_SKIPPED_INPUTS: 1
+INFO  :    REDUCE_INPUT_GROUPS: 1
+INFO  :    REDUCE_INPUT_RECORDS: 1
+INFO  :    SHUFFLE_BYTES: 120
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 120
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 120
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 1704
+INFO  :    SPILLED_RECORDS: 1
+INFO  : TaskCounter_Reducer_2_OUTPUT_out_Reducer_2:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : org.apache.hadoop.hive.ql.exec.tez.HiveInputCounters:
+INFO  :    GROUPED_INPUT_SPLITS_Map_1: 1
+INFO  :    INPUT_DIRECTORIES_Map_1: 1
+INFO  :    INPUT_FILES_Map_1: 1
+INFO  :    RAW_INPUT_SPLITS_Map_1: 1
+INFO  : Starting task [Stage-2:DEPENDENCY_COLLECTION] in serial mode
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.emp_details_partitioned partition (location=pune) from hdfs://sandbox-hdp.hortonworks.com:8020/warehouse/tablespace/managed/hive/ineuron_db.db/emp_details_partitioned/location=pune/.hive-staging_hive_2021-08-10_05-58-35_013_3937024493238467544-1/-ext-10000
+INFO  : Starting task [Stage-3:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810055831_0493e2c5-4b84-4903-833c-4c3baac16efd); Time taken: 247.876 seconds
+INFO  : OK
+No rows affected (305.168 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+[root@sandbox-hdp ~]# hdfs dfs -ls /warehouse/tablespace/managed/hive/ineuron_db.db/emp_details_partitioned/
+Found 1 items
+drwxr-xr-x+  - hive hadoop          0 2021-08-10 06:03 /warehouse/tablespace/managed/hive/ineuron_db.db/emp_details_partitioned/location=pune
+[root@sandbox-hdp ~]#
+
+
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> insert overwrite table emp_details_partitioned
+. . . . . . . . . . . . . . . . . . . . . . .> partition (location)
+. . . . . . . . . . . . . . . . . . . . . . .> select * from emp_details;
+INFO  : Compiling command(queryId=hive_20210810061214_ae97e10d-04d6-492e-bd6f-9721dfc50fd7): insert overwrite table emp_details_partitioned
+partition (location)
+select * from emp_details
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_col0, type:string, comment:null), FieldSchema(name:_col1, type:string, comment:null), FieldSchema(name:_col2, type:int, comment:null), FieldSchema(name:_col3, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810061214_ae97e10d-04d6-492e-bd6f-9721dfc50fd7); Time taken: 2.27 seconds
+INFO  : Executing command(queryId=hive_20210810061214_ae97e10d-04d6-492e-bd6f-9721dfc50fd7): insert overwrite table emp_details_partitioned
+partition (location)
+select * from emp_details
+INFO  : Query ID = hive_20210810061214_ae97e10d-04d6-492e-bd6f-9721dfc50fd7
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Subscribed to counters: [] for queryId: hive_20210810061214_ae97e10d-04d6-492e-bd6f-9721dfc50fd7
+INFO  : Session is already open
+INFO  : Dag name: insert overwrite table emp_det...emp_details (Stage-1)
+INFO  : Status: Running (Executing on YARN cluster with App id application_1628559691397_0006)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 146.89 s
+----------------------------------------------------------------------------------------------
+INFO  : Status: DAG finished successfully in 133.50 seconds
+INFO  :
+INFO  : Query Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : OPERATION                            DURATION
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : Compile Query                           2.27s
+INFO  : Prepare Plan                            1.15s
+INFO  : Get Query Coordinator (AM)              0.00s
+INFO  : Submit Plan                             1.05s
+INFO  : Start DAG                               0.70s
+INFO  : Run DAG                               133.50s
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : Task Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :   VERTICES      DURATION(ms)   CPU_TIME(ms)    GC_TIME(ms)   INPUT_RECORDS   OUTPUT_RECORDS
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :      Map 1          89298.00         16,630            629               6                3
+INFO  :  Reducer 2          35426.00          8,260            531               3                0
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : org.apache.tez.common.counters.DAGCounter:
+INFO  :    NUM_SUCCEEDED_TASKS: 3
+INFO  :    TOTAL_LAUNCHED_TASKS: 3
+INFO  :    AM_CPU_MILLISECONDS: 9200
+INFO  :    AM_GC_TIME_MILLIS: 46
+INFO  : File System Counters:
+INFO  :    FILE_BYTES_READ: 716
+INFO  :    FILE_BYTES_WRITTEN: 352
+INFO  :    HDFS_BYTES_READ: 111
+INFO  :    HDFS_BYTES_WRITTEN: 3353
+INFO  :    HDFS_READ_OPS: 26
+INFO  :    HDFS_WRITE_OPS: 20
+INFO  :    HDFS_OP_CREATE: 9
+INFO  :    HDFS_OP_GET_FILE_STATUS: 25
+INFO  :    HDFS_OP_MKDIRS: 6
+INFO  :    HDFS_OP_OPEN: 1
+INFO  :    HDFS_OP_RENAME: 5
+INFO  : org.apache.tez.common.counters.TaskCounter:
+INFO  :    REDUCE_INPUT_GROUPS: 3
+INFO  :    REDUCE_INPUT_RECORDS: 3
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    SPILLED_RECORDS: 6
+INFO  :    NUM_SHUFFLED_INPUTS: 2
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    MERGED_MAP_OUTPUTS: 2
+INFO  :    GC_TIME_MILLIS: 1160
+INFO  :    TASK_DURATION_MILLIS: 101804
+INFO  :    CPU_MILLISECONDS: 24890
+INFO  :    PHYSICAL_MEMORY_BYTES: 997195776
+INFO  :    VIRTUAL_MEMORY_BYTES: 6641827840
+INFO  :    COMMITTED_HEAP_BYTES: 997195776
+INFO  :    INPUT_RECORDS_PROCESSED: 6
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 111
+INFO  :    OUTPUT_RECORDS: 3
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_BYTES: 312
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 330
+INFO  :    OUTPUT_BYTES_PHYSICAL: 296
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 296
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SHUFFLE_BYTES: 296
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 330
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 296
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    SHUFFLE_PHASE_TIME: 1309
+INFO  :    MERGE_PHASE_TIME: 1722
+INFO  :    FIRST_EVENT_RECEIVED: 812
+INFO  :    LAST_EVENT_RECEIVED: 812
+INFO  : HIVE:
+INFO  :    CREATED_DYNAMIC_PARTITIONS: 3
+INFO  :    CREATED_FILES: 5
+INFO  :    DESERIALIZE_ERRORS: 0
+INFO  :    RECORDS_IN_Map_1: 6
+INFO  :    RECORDS_OUT_0: 3
+INFO  :    RECORDS_OUT_1_ineuron_db.emp_details_partitioned: 6
+INFO  :    RECORDS_OUT_INTERMEDIATE_Map_1: 3
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_2: 0
+INFO  :    RECORDS_OUT_OPERATOR_FS_10: 3
+INFO  :    RECORDS_OUT_OPERATOR_FS_3: 6
+INFO  :    RECORDS_OUT_OPERATOR_GBY_6: 3
+INFO  :    RECORDS_OUT_OPERATOR_GBY_8: 3
+INFO  :    RECORDS_OUT_OPERATOR_MAP_0: 0
+INFO  :    RECORDS_OUT_OPERATOR_RS_7: 3
+INFO  :    RECORDS_OUT_OPERATOR_SEL_1: 6
+INFO  :    RECORDS_OUT_OPERATOR_SEL_5: 6
+INFO  :    RECORDS_OUT_OPERATOR_SEL_9: 3
+INFO  :    RECORDS_OUT_OPERATOR_TS_0: 6
+INFO  : Shuffle Errors:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : Shuffle Errors_Reducer_2_INPUT_Map_1:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : TaskCounter_Map_1_INPUT_emp_details:
+INFO  :    INPUT_RECORDS_PROCESSED: 6
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 111
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_2:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 312
+INFO  :    OUTPUT_BYTES_PHYSICAL: 296
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 330
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 3
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SPILLED_RECORDS: 3
+INFO  : TaskCounter_Reducer_2_INPUT_Map_1:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 296
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    FIRST_EVENT_RECEIVED: 812
+INFO  :    LAST_EVENT_RECEIVED: 812
+INFO  :    MERGED_MAP_OUTPUTS: 2
+INFO  :    MERGE_PHASE_TIME: 1722
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 2
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    REDUCE_INPUT_GROUPS: 3
+INFO  :    REDUCE_INPUT_RECORDS: 3
+INFO  :    SHUFFLE_BYTES: 296
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 330
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 296
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 1309
+INFO  :    SPILLED_RECORDS: 3
+INFO  : TaskCounter_Reducer_2_OUTPUT_out_Reducer_2:
+INFO  :    OUTPUT_RECORDS: 0
+INFO  : org.apache.hadoop.hive.ql.exec.tez.HiveInputCounters:
+INFO  :    GROUPED_INPUT_SPLITS_Map_1: 1
+INFO  :    INPUT_DIRECTORIES_Map_1: 1
+INFO  :    INPUT_FILES_Map_1: 1
+INFO  :    RAW_INPUT_SPLITS_Map_1: 1
+INFO  : Starting task [Stage-2:DEPENDENCY_COLLECTION] in serial mode
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.emp_details_partitioned partition (location=null) from hdfs://sandbox-hdp.hortonworks.com:8020/warehouse/tablespace/managed/hive/ineuron_db.db/emp_details_partitioned/.hive-staging_hive_2021-08-10_06-12-14_124_1222591170130330282-1/-ext-10000
+INFO  :
+
+INFO  :          Time taken to load dynamic partitions: 6.21 seconds
+INFO  :          Time taken for adding to write entity : 0.002 seconds
+INFO  : Starting task [Stage-3:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810061214_ae97e10d-04d6-492e-bd6f-9721dfc50fd7); Time taken: 149.169 seconds
+INFO  : OK
+No rows affected (152.083 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
+
+[root@sandbox-hdp ~]# hdfs dfs -ls /warehouse/tablespace/managed/hive/ineuron_db.db/emp_details_partitioned/
+Found 3 items
+drwxrwxrwx+  - hive hadoop          0 2021-08-10 06:14 /warehouse/tablespace/managed/hive/ineuron_db.db/emp_details_partitioned/location=bangalore
+drwxrwxrwx+  - hive hadoop          0 2021-08-10 06:14 /warehouse/tablespace/managed/hive/ineuron_db.db/emp_details_partitioned/location=chennai
+drwxr-xr-x+  - hive hadoop          0 2021-08-10 06:14 /warehouse/tablespace/managed/hive/ineuron_db.db/emp_details_partitioned/location=pune
+

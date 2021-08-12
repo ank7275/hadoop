@@ -1,0 +1,750 @@
+
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> CREATE TABLE users(id int,name string, salary int,unit string)
+. . . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+. . . . . . . . . . . . . . . . . . . . . . .> WITH SERDEPROPERTIES (
+. . . . . . . . . . . . . . . . . . . . . . .>     "separatorChar" = ",",
+. . . . . . . . . . . . . . . . . . . . . . .>     "quoteChar"     = "\"",
+. . . . . . . . . . . . . . . . . . . . . . .>     "escapeChar"    = "\\"
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> STORED AS TEXTFILE;
+INFO  : Compiling command(queryId=hive_20210810024136_9e9b7b98-3533-496e-a54d-9ae8750e472c): CREATE TABLE users(id int,name string, salary int,unit string)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+"separatorChar" = ",",
+"quoteChar"     = "\"",
+"escapeChar"    = "\\"
+)
+STORED AS TEXTFILE
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810024136_9e9b7b98-3533-496e-a54d-9ae8750e472c); Time taken: 0.401 seconds
+INFO  : Executing command(queryId=hive_20210810024136_9e9b7b98-3533-496e-a54d-9ae8750e472c): CREATE TABLE users(id int,name string, salary int,unit string)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+"separatorChar" = ",",
+"quoteChar"     = "\"",
+"escapeChar"    = "\\"
+)
+STORED AS TEXTFILE
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810024136_9e9b7b98-3533-496e-a54d-9ae8750e472c); Time taken: 0.283 seconds
+INFO  : OK
+No rows affected (1.08 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> LOAD DATA INPATH '/tmp/users.csv' into table users;
+INFO  : Compiling command(queryId=hive_20210810024144_7f04bbbe-211a-4e90-8c54-ae5c90248846): LOAD DATA INPATH '/tmp/users.csv' into table users
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810024144_7f04bbbe-211a-4e90-8c54-ae5c90248846); Time taken: 0.289 seconds
+INFO  : Executing command(queryId=hive_20210810024144_7f04bbbe-211a-4e90-8c54-ae5c90248846): LOAD DATA INPATH '/tmp/users.csv' into table users
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.users from hdfs://sandbox-hdp.hortonworks.com:8020/tmp/users.csv
+INFO  : Starting task [Stage-1:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810024144_7f04bbbe-211a-4e90-8c54-ae5c90248846); Time taken: 1.276 seconds
+INFO  : OK
+No rows affected (1.87 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from users;
+INFO  : Compiling command(queryId=hive_20210810024355_06aa451a-cd20-4b11-a31f-4535cb3a4c08): select * from users
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:users.id, type:string, comment:null), FieldSchema(name:users.name, type:string, comment:null), FieldSchema(name:users.salary, type:string, comment:null), FieldSchema(name:users.unit, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810024355_06aa451a-cd20-4b11-a31f-4535cb3a4c08); Time taken: 0.619 seconds
+INFO  : Executing command(queryId=hive_20210810024355_06aa451a-cd20-4b11-a31f-4535cb3a4c08): select * from users
+INFO  : Completed executing command(queryId=hive_20210810024355_06aa451a-cd20-4b11-a31f-4535cb3a4c08); Time taken: 0.012 seconds
+INFO  : OK
++-----------+-------------+---------------+-------------+
+| users.id  | users.name  | users.salary  | users.unit  |
++-----------+-------------+---------------+-------------+
+| 1         | Amit        | 100           | DNA         |
+| 2         | Sumit       | 200           | DNA         |
+| 3         | Yadav       | 300           | DNA         |
+| 4         | Sunil       | 500           | FCS         |
+| 5         | Kranti      | 100           | FCS         |
+| 6         | Mahoor      | 200           | FCS         |
+| 8         | Chandra     | 500           | DNA         |
++-----------+-------------+---------------+-------------+
+7 rows selected (0.858 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> LOAD DATA INPATH '/tmp/locations.csv' into table locations;
+INFO  : Compiling command(queryId=hive_20210810024611_e87973c8-afb3-4e67-9300-3407b18316ca): LOAD DATA INPATH '/tmp/locations.csv' into table locations
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810024611_e87973c8-afb3-4e67-9300-3407b18316ca); Time taken: 1.074 seconds
+INFO  : Executing command(queryId=hive_20210810024611_e87973c8-afb3-4e67-9300-3407b18316ca): LOAD DATA INPATH '/tmp/locations.csv' into table locations
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.locations from hdfs://sandbox-hdp.hortonworks.com:8020/tmp/locations.csv
+INFO  : Starting task [Stage-1:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810024611_e87973c8-afb3-4e67-9300-3407b18316ca); Time taken: 1.735 seconds
+INFO  : OK
+No rows affected (3.672 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from locations;
+INFO  : Compiling command(queryId=hive_20210810024622_af13aac0-9597-4444-af48-d9d384644a73): select * from locations
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:locations.id, type:string, comment:null), FieldSchema(name:locations.location, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810024622_af13aac0-9597-4444-af48-d9d384644a73); Time taken: 0.606 seconds
+INFO  : Executing command(queryId=hive_20210810024622_af13aac0-9597-4444-af48-d9d384644a73): select * from locations
+INFO  : Completed executing command(queryId=hive_20210810024622_af13aac0-9597-4444-af48-d9d384644a73); Time taken: 0.026 seconds
+INFO  : OK
++---------------+---------------------+
+| locations.id  | locations.location  |
++---------------+---------------------+
+| 1             | UP                  |
+| 2             | BIHAR               |
+| 3             | MP                  |
+| 4             | AP                  |
+| 5             | MAHARASHTRA         |
+| 6             | GOA                 |
+| 7             | JHARKHAND           |
++---------------+---------------------+
+7 rows selected (0.798 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> CREATE TABLE buck_users
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> id INT,
+. . . . . . . . . . . . . . . . . . . . . . .> name STRING,
+. . . . . . . . . . . . . . . . . . . . . . .> salary INT,
+. . . . . . . . . . . . . . . . . . . . . . .> unit STRING
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> CLUSTERED BY (id)
+. . . . . . . . . . . . . . . . . . . . . . .> SORTED BY (id)
+. . . . . . . . . . . . . . . . . . . . . . .> INTO 2 BUCKETS;
+INFO  : Compiling command(queryId=hive_20210810024706_4037df51-47a3-4f25-9d16-3c73f4ad7a7f): CREATE TABLE buck_users
+(
+id INT,
+name STRING,
+salary INT,
+unit STRING
+)
+CLUSTERED BY (id)
+SORTED BY (id)
+INTO 2 BUCKETS
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810024706_4037df51-47a3-4f25-9d16-3c73f4ad7a7f); Time taken: 0.203 seconds
+INFO  : Executing command(queryId=hive_20210810024706_4037df51-47a3-4f25-9d16-3c73f4ad7a7f): CREATE TABLE buck_users
+(
+id INT,
+name STRING,
+salary INT,
+unit STRING
+)
+CLUSTERED BY (id)
+SORTED BY (id)
+INTO 2 BUCKETS
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810024706_4037df51-47a3-4f25-9d16-3c73f4ad7a7f); Time taken: 0.907 seconds
+INFO  : OK
+No rows affected (1.759 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> CREATE TABLE buck_locations
+. . . . . . . . . . . . . . . . . . . . . . .> (
+. . . . . . . . . . . . . . . . . . . . . . .> id INT,
+. . . . . . . . . . . . . . . . . . . . . . .> location STRING
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> CLUSTERED BY (id)
+. . . . . . . . . . . . . . . . . . . . . . .> SORTED BY (id)
+. . . . . . . . . . . . . . . . . . . . . . .> INTO 2 BUCKETS;
+INFO  : Compiling command(queryId=hive_20210810024725_7dd6d272-f0ea-498f-80f4-33ca8f8984d4): CREATE TABLE buck_locations
+(
+id INT,
+location STRING
+)
+CLUSTERED BY (id)
+SORTED BY (id)
+INTO 2 BUCKETS
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810024725_7dd6d272-f0ea-498f-80f4-33ca8f8984d4); Time taken: 0.444 seconds
+INFO  : Executing command(queryId=hive_20210810024725_7dd6d272-f0ea-498f-80f4-33ca8f8984d4): CREATE TABLE buck_locations
+(
+id INT,
+location STRING
+)
+CLUSTERED BY (id)
+SORTED BY (id)
+INTO 2 BUCKETS
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810024725_7dd6d272-f0ea-498f-80f4-33ca8f8984d4); Time taken: 0.94 seconds
+INFO  : OK
+No rows affected (3.03 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> SET hive.enforce.bucketing=true;
+No rows affected (0.015 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> INSERT OVERWRITE TABLE buck_users
+. . . . . . . . . . . . . . . . . . . . . . .> SELECT * FROM users;
+INFO  : Compiling command(queryId=hive_20210810024747_b535a2d6-6755-4ac3-a640-cd271fc713d9): INSERT OVERWRITE TABLE buck_users
+SELECT * FROM users
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_col0, type:int, comment:null), FieldSchema(name:_col1, type:string, comment:null), FieldSchema(name:_col2, type:int, comment:null), FieldSchema(name:_col3, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810024747_b535a2d6-6755-4ac3-a640-cd271fc713d9); Time taken: 1.09 seconds
+INFO  : Executing command(queryId=hive_20210810024747_b535a2d6-6755-4ac3-a640-cd271fc713d9): INSERT OVERWRITE TABLE buck_users
+SELECT * FROM users
+INFO  : Query ID = hive_20210810024747_b535a2d6-6755-4ac3-a640-cd271fc713d9
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Subscribed to counters: [] for queryId: hive_20210810024747_b535a2d6-6755-4ac3-a640-cd271fc713d9
+INFO  : Tez session hasn't been created yet. Opening session
+INFO  : Dag name: INSERT OVERWRITE TABLE buck_users
+SE...users (Stage-1)
+INFO  : Status: Running (Executing on YARN cluster with App id application_1628559691397_0003)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 377.23 s
+----------------------------------------------------------------------------------------------
+INFO  : Status: DAG finished successfully in 371.43 seconds
+INFO  :
+INFO  : Query Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : OPERATION                            DURATION
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : Compile Query                           1.09s
+INFO  : Prepare Plan                           53.14s
+INFO  : Get Query Coordinator (AM)              0.01s
+INFO  : Submit Plan                             2.72s
+INFO  : Start DAG                               7.73s
+INFO  : Run DAG                               371.32s
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : Task Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :   VERTICES      DURATION(ms)   CPU_TIME(ms)    GC_TIME(ms)   INPUT_RECORDS   OUTPUT_RECORDS
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :      Map 1          36033.00          8,930            610               7                7
+INFO  :  Reducer 2         255708.00         19,600          4,663               7                2
+INFO  :  Reducer 3         266194.00          5,500             38               2                0
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : org.apache.tez.common.counters.DAGCounter:
+INFO  :    NUM_SUCCEEDED_TASKS: 4
+INFO  :    TOTAL_LAUNCHED_TASKS: 4
+INFO  :    AM_CPU_MILLISECONDS: 21400
+INFO  :    AM_GC_TIME_MILLIS: 314
+INFO  : File System Counters:
+INFO  :    FILE_BYTES_READ: 898
+INFO  :    FILE_BYTES_WRITTEN: 614
+INFO  :    HDFS_BYTES_READ: 115
+INFO  :    HDFS_BYTES_WRITTEN: 1816
+INFO  :    HDFS_READ_OPS: 10
+INFO  :    HDFS_WRITE_OPS: 10
+INFO  :    HDFS_OP_CREATE: 7
+INFO  :    HDFS_OP_GET_FILE_STATUS: 9
+INFO  :    HDFS_OP_MKDIRS: 2
+INFO  :    HDFS_OP_OPEN: 1
+INFO  :    HDFS_OP_RENAME: 1
+INFO  : org.apache.tez.common.counters.TaskCounter:
+INFO  :    REDUCE_INPUT_GROUPS: 7
+INFO  :    REDUCE_INPUT_RECORDS: 7
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    SPILLED_RECORDS: 14
+INFO  :    NUM_SHUFFLED_INPUTS: 4
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    MERGED_MAP_OUTPUTS: 2
+INFO  :    GC_TIME_MILLIS: 5311
+INFO  :    TASK_DURATION_MILLIS: 508287
+INFO  :    CPU_MILLISECONDS: 34030
+INFO  :    PHYSICAL_MEMORY_BYTES: 1029701632
+INFO  :    VIRTUAL_MEMORY_BYTES: 8824389632
+INFO  :    COMMITTED_HEAP_BYTES: 1029701632
+INFO  :    INPUT_RECORDS_PROCESSED: 9
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 115
+INFO  :    OUTPUT_RECORDS: 9
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_BYTES: 443
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 487
+INFO  :    OUTPUT_BYTES_PHYSICAL: 542
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 204
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SHUFFLE_BYTES: 494
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 487
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 494
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    SHUFFLE_PHASE_TIME: 254914
+INFO  :    MERGE_PHASE_TIME: 34066
+INFO  :    FIRST_EVENT_RECEIVED: 8878
+INFO  :    LAST_EVENT_RECEIVED: 241253
+INFO  : HIVE:
+INFO  :    CREATED_FILES: 3
+INFO  :    DESERIALIZE_ERRORS: 0
+INFO  :    RECORDS_IN_Map_1: 7
+INFO  :    RECORDS_OUT_0: 1
+INFO  :    RECORDS_OUT_1_ineuron_db.buck_users: 7
+INFO  :    RECORDS_OUT_INTERMEDIATE_Map_1: 7
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_2: 2
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_3: 0
+INFO  :    RECORDS_OUT_OPERATOR_FS_12: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_5: 7
+INFO  :    RECORDS_OUT_OPERATOR_GBY_10: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_8: 2
+INFO  :    RECORDS_OUT_OPERATOR_MAP_0: 0
+INFO  :    RECORDS_OUT_OPERATOR_RS_14: 7
+INFO  :    RECORDS_OUT_OPERATOR_RS_9: 2
+INFO  :    RECORDS_OUT_OPERATOR_SEL_13: 7
+INFO  :    RECORDS_OUT_OPERATOR_SEL_3: 7
+INFO  :    RECORDS_OUT_OPERATOR_SEL_7: 7
+INFO  :    RECORDS_OUT_OPERATOR_TS_0: 7
+INFO  : Shuffle Errors:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : Shuffle Errors_Reducer_2_INPUT_Map_1:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : TaskCounter_Map_1_INPUT_users:
+INFO  :    INPUT_RECORDS_PROCESSED: 7
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 115
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_2:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 164
+INFO  :    OUTPUT_BYTES_PHYSICAL: 204
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 190
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 7
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SPILLED_RECORDS: 7
+INFO  : TaskCounter_Reducer_2_INPUT_Map_1:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 204
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    FIRST_EVENT_RECEIVED: 8817
+INFO  :    LAST_EVENT_RECEIVED: 8817
+INFO  :    MERGED_MAP_OUTPUTS: 2
+INFO  :    MERGE_PHASE_TIME: 34066
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 2
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    REDUCE_INPUT_GROUPS: 7
+INFO  :    REDUCE_INPUT_RECORDS: 7
+INFO  :    SHUFFLE_BYTES: 204
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 190
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 204
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 22430
+INFO  :    SPILLED_RECORDS: 7
+INFO  : TaskCounter_Reducer_2_OUTPUT_Reducer_3:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 279
+INFO  :    OUTPUT_BYTES_PHYSICAL: 338
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 297
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 2
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Reducer_3_INPUT_Reducer_2:
+INFO  :    FIRST_EVENT_RECEIVED: 61
+INFO  :    INPUT_RECORDS_PROCESSED: 2
+INFO  :    LAST_EVENT_RECEIVED: 232436
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 2
+INFO  :    SHUFFLE_BYTES: 290
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 297
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 290
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 417.04 s
+----------------------------------------------------------------------------------------------
+INFO  : Completed executing command(queryId=hive_20210810024747_b535a2d6-6755-4ac3-a640-cd271fc713d9); Time taken: 480.357 seconds
+INFO  : OK
+No rows affected (481.756 seconds)
+
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> INSERT OVERWRITE TABLE buck_locat                                                                                                             ions
+. . . . . . . . . . . . . . . . . . . . . . .> SELECT * FROM locations;
+INFO  : Compiling command(queryId=hive_20210810051412_6a030898-3103-4a3a-adec-ca                                                                                                             dcaf4cf68d): INSERT OVERWRITE TABLE buck_locations
+SELECT * FROM locations
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_col0, type                                                                                                             :int, comment:null), FieldSchema(name:_col1, type:string, comment:null)], proper                                                                                                             ties:null)
+INFO  : Completed compiling command(queryId=hive_20210810051412_6a030898-3103-4a                                                                                                             3a-adec-cadcaf4cf68d); Time taken: 7.003 seconds
+INFO  : Executing command(queryId=hive_20210810051412_6a030898-3103-4a3a-adec-ca                                                                                                             dcaf4cf68d): INSERT OVERWRITE TABLE buck_locations
+SELECT * FROM locations
+INFO  : Query ID = hive_20210810051412_6a030898-3103-4a3a-adec-cadcaf4cf68d
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Subscribed to counters: [] for queryId: hive_20210810051412_6a030898-310                                                                                                             3-4a3a-adec-cadcaf4cf68d
+INFO  : Tez session hasn't been created yet. Opening session
+INFO  : Dag name: INSERT OVERWRITE TABLE buck_loca...locations (Stage-1)
+INFO  : Status: Running (Executing on YARN cluster with App id application_16285                                                                                                             59691397_0004)
+
+--------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container  INITIALIZING     -1          0        0       -1                                                                                                                    0       0
+--------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container        INITED      1          0        0        1                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container        INITED      1          0        0        1                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container        INITED      1          0        0        1                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container        INITED      1          0        0        1                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1            container       RUNNING      1          0        1        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             --------------------------------------------------------------------------------                                                                                                             --------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FA                                                                                                             ILED  KILLED
+--------------------------------------------------------------------------------                                                                                                             --------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0                                                                                                                    0       0  ------------------------------------------------------------------                                                                                                             ----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0                                                                                                 Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 399.92 s
+----------------------------------------------------------------------------------------------
+INFO  : Status: DAG finished successfully in 399.80 seconds
+INFO  :
+INFO  : Query Execution Summary
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : OPERATION                            DURATION
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  : Compile Query                           7.00s
+INFO  : Prepare Plan                           57.55s
+INFO  : Get Query Coordinator (AM)              0.08s
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 405.31 s
+----------------------------------------------------------------------------------------------
+INFO  :      Map 1         245165.00         17,770          1,904               7                7
+INFO  :  Reducer 2         125757.00         15,860            499               7                2
+INFO  :  Reducer 3          54733.00          2,230             49               2                0
+INFO  : ----------------------------------------------------------------------------------------------
+INFO  :
+INFO  : org.apache.tez.common.counters.DAGCounter:
+INFO  :    NUM_SUCCEEDED_TASKS: 4
+INFO  :    TOTAL_LAUNCHED_TASKS: 4
+INFO  :    AM_CPU_MILLISECONDS: 29720
+INFO  :    AM_GC_TIME_MILLIS: 220
+INFO  : File System Counters:
+INFO  :    FILE_BYTES_READ: 696
+INFO  :    FILE_BYTES_WRITTEN: 461
+INFO  :    HDFS_BYTES_READ: 55
+INFO  :    HDFS_BYTES_WRITTEN: 1308
+INFO  :    HDFS_READ_OPS: 10
+INFO  :    HDFS_WRITE_OPS: 10
+INFO  :    HDFS_OP_CREATE: 7
+INFO  :    HDFS_OP_GET_FILE_STATUS: 9
+INFO  :    HDFS_OP_MKDIRS: 2
+INFO  :    HDFS_OP_OPEN: 1
+INFO  :    HDFS_OP_RENAME: 1
+INFO  : org.apache.tez.common.counters.TaskCounter:
+INFO  :    REDUCE_INPUT_GROUPS: 7
+INFO  :    REDUCE_INPUT_RECORDS: 7
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    SPILLED_RECORDS: 14
+INFO  :    NUM_SHUFFLED_INPUTS: 4
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    MERGED_MAP_OUTPUTS: 2
+INFO  :    GC_TIME_MILLIS: 2452
+INFO  :    TASK_DURATION_MILLIS: 386973
+INFO  :    CPU_MILLISECONDS: 35860
+INFO  :    PHYSICAL_MEMORY_BYTES: 1181745152
+INFO  :    VIRTUAL_MEMORY_BYTES: 8843747328
+INFO  :    COMMITTED_HEAP_BYTES: 1181745152
+INFO  :    INPUT_RECORDS_PROCESSED: 9
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 55
+INFO  :    OUTPUT_RECORDS: 9
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_BYTES: 257
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 299
+INFO  :    OUTPUT_BYTES_PHYSICAL: 389
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 151
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SHUFFLE_BYTES: 341
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 299
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 341
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    SHUFFLE_PHASE_TIME: 56243
+INFO  :    MERGE_PHASE_TIME: 5998
+INFO  :    FIRST_EVENT_RECEIVED: 3515
+INFO  :    LAST_EVENT_RECEIVED: 55508
+INFO  : HIVE:
+INFO  :    CREATED_FILES: 3
+INFO  :    DESERIALIZE_ERRORS: 0
+INFO  :    RECORDS_IN_Map_1: 7
+INFO  :    RECORDS_OUT_0: 1
+INFO  :    RECORDS_OUT_1_ineuron_db.buck_locations: 7
+INFO  :    RECORDS_OUT_INTERMEDIATE_Map_1: 7
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_2: 2
+INFO  :    RECORDS_OUT_INTERMEDIATE_Reducer_3: 0
+INFO  :    RECORDS_OUT_OPERATOR_FS_12: 1
+INFO  :    RECORDS_OUT_OPERATOR_FS_5: 7
+INFO  :    RECORDS_OUT_OPERATOR_GBY_10: 1
+INFO  :    RECORDS_OUT_OPERATOR_GBY_8: 2
+INFO  :    RECORDS_OUT_OPERATOR_MAP_0: 0
+INFO  :    RECORDS_OUT_OPERATOR_RS_14: 7
+INFO  :    RECORDS_OUT_OPERATOR_RS_9: 2
+INFO  :    RECORDS_OUT_OPERATOR_SEL_13: 7
+INFO  :    RECORDS_OUT_OPERATOR_SEL_3: 7
+INFO  :    RECORDS_OUT_OPERATOR_SEL_7: 7
+INFO  :    RECORDS_OUT_OPERATOR_TS_0: 7
+INFO  : Shuffle Errors:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : Shuffle Errors_Reducer_2_INPUT_Map_1:
+INFO  :    BAD_ID: 0
+INFO  :    CONNECTION: 0
+INFO  :    IO_ERROR: 0
+INFO  :    WRONG_LENGTH: 0
+INFO  :    WRONG_MAP: 0
+INFO  :    WRONG_REDUCE: 0
+INFO  : TaskCounter_Map_1_INPUT_locations:
+INFO  :    INPUT_RECORDS_PROCESSED: 7
+INFO  :    INPUT_SPLIT_LENGTH_BYTES: 55
+INFO  : TaskCounter_Map_1_OUTPUT_Reducer_2:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 104
+INFO  :    OUTPUT_BYTES_PHYSICAL: 151
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 130
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 7
+INFO  :    SHUFFLE_CHUNK_COUNT: 1
+INFO  :    SPILLED_RECORDS: 7
+INFO  : TaskCounter_Reducer_2_INPUT_Map_1:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 151
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    COMBINE_INPUT_RECORDS: 0
+INFO  :    FIRST_EVENT_RECEIVED: 3489
+INFO  :    LAST_EVENT_RECEIVED: 3489
+INFO  :    MERGED_MAP_OUTPUTS: 2
+INFO  :    MERGE_PHASE_TIME: 5998
+INFO  :    NUM_DISK_TO_DISK_MERGES: 0
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_MEM_TO_DISK_MERGES: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 2
+INFO  :    NUM_SKIPPED_INPUTS: 0
+INFO  :    REDUCE_INPUT_GROUPS: 7
+INFO  :    REDUCE_INPUT_RECORDS: 7
+INFO  :    SHUFFLE_BYTES: 151
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 130
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 151
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+INFO  :    SHUFFLE_BYTES_TO_MEM: 0
+INFO  :    SHUFFLE_PHASE_TIME: 4161
+INFO  :    SPILLED_RECORDS: 7
+INFO  : TaskCounter_Reducer_2_OUTPUT_Reducer_3:
+INFO  :    ADDITIONAL_SPILLS_BYTES_READ: 0
+INFO  :    ADDITIONAL_SPILLS_BYTES_WRITTEN: 0
+INFO  :    ADDITIONAL_SPILL_COUNT: 0
+INFO  :    OUTPUT_BYTES: 153
+INFO  :    OUTPUT_BYTES_PHYSICAL: 238
+INFO  :    OUTPUT_BYTES_WITH_OVERHEAD: 169
+INFO  :    OUTPUT_LARGE_RECORDS: 0
+INFO  :    OUTPUT_RECORDS: 2
+INFO  :    SPILLED_RECORDS: 0
+INFO  : TaskCounter_Reducer_3_INPUT_Reducer_2:
+INFO  :    FIRST_EVENT_RECEIVED: 26
+INFO  :    INPUT_RECORDS_PROCESSED: 2
+INFO  :    LAST_EVENT_RECEIVED: 52019
+INFO  :    NUM_FAILED_SHUFFLE_INPUTS: 0
+INFO  :    NUM_SHUFFLED_INPUTS: 2
+INFO  :    SHUFFLE_BYTES: 190
+INFO  :    SHUFFLE_BYTES_DECOMPRESSED: 169
+INFO  :    SHUFFLE_BYTES_DISK_DIRECT: 190
+INFO  :    SHUFFLE_BYTES_TO_DISK: 0
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 457.47 s
+----------------------------------------------------------------------------------------------
+No rows affected (537.744 seconds)
+
+
+
+
+[root@sandbox-hdp ~]# hdfs dfs -ls /warehouse/tablespace/managed/hive/ineuron_db.db/buck_users/base_0000001/
+Found 2 items
+-rw-rw-rw-+  1 hive hadoop        539 2021-08-10 02:50 /warehouse/tablespace/managed/hive/ineuron_db.db/buck_users/base_0000001/000000_0
+-rw-rw-rw-+  1 hive hadoop        539 2021-08-10 02:54 /warehouse/tablespace/managed/hive/ineuron_db.db/buck_users/base_0000001/000001_0
+
+
+
+[root@sandbox-hdp ~]# hdfs dfs -ls /warehouse/tablespace/managed/hive/ineuron_db.db/buck_locations/base_0000001
+Found 2 items
+-rw-rw-rw-+  1 hive hadoop        328 2021-08-10 04:28 /warehouse/tablespace/managed/hive/ineuron_db.db/buck_locations/base_0000001/000000_0
+-rw-rw-rw-+  1 hive hadoop        313 2021-08-10 04:28 /warehouse/tablespace/managed/hive/ineuron_db.db/buck_locations/base_0000001/000001_0
+

@@ -1,0 +1,62 @@
+
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> CREATE TABLE json_table(name string, id bigint, skills array<string>)
+. . . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
+. . . . . . . . . . . . . . . . . . . . . . .> STORED AS TEXTFILE;
+INFO  : Compiling command(queryId=hive_20210810062322_e802ef2a-7687-49ac-b8a3-a1e7eb5f1a48): CREATE TABLE json_table(name string, id bigint, skills array<string>)
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
+STORED AS TEXTFILE
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810062322_e802ef2a-7687-49ac-b8a3-a1e7eb5f1a48); Time taken: 4.64 seconds
+INFO  : Executing command(queryId=hive_20210810062322_e802ef2a-7687-49ac-b8a3-a1e7eb5f1a48): CREATE TABLE json_table(name string, id bigint, skills array<string>)
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
+STORED AS TEXTFILE
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810062322_e802ef2a-7687-49ac-b8a3-a1e7eb5f1a48); Time taken: 2.21 seconds
+INFO  : OK
+No rows affected (7.234 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> load data inpath '/tmp/json_file.json' into table json_table;
+INFO  : Compiling command(queryId=hive_20210810062611_437ea99f-3793-4047-84b2-d452c5974d9b): load data inpath '/tmp/json_file.json' into table json_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810062611_437ea99f-3793-4047-84b2-d452c5974d9b); Time taken: 0.494 seconds
+INFO  : Executing command(queryId=hive_20210810062611_437ea99f-3793-4047-84b2-d452c5974d9b): load data inpath '/tmp/json_file.json' into table json_table
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table ineuron_db.json_table from hdfs://sandbox-hdp.hortonworks.com:8020/tmp/json_file.json
+INFO  : Starting task [Stage-1:STATS] in serial mode
+INFO  : Completed executing command(queryId=hive_20210810062611_437ea99f-3793-4047-84b2-d452c5974d9b); Time taken: 4.668 seconds
+INFO  : OK
+No rows affected (9.253 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select * from json_table;
+INFO  : Compiling command(queryId=hive_20210810062632_5a6bf967-2ab6-4b57-8526-48648927e6eb): select * from json_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:json_table.name, type:string, comment:null), FieldSchema(name:json_table.id, type:bigint, comment:null), FieldSchema(name:json_table.skills, type:array<string>, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810062632_5a6bf967-2ab6-4b57-8526-48648927e6eb); Time taken: 1.361 seconds
+INFO  : Executing command(queryId=hive_20210810062632_5a6bf967-2ab6-4b57-8526-48648927e6eb): select * from json_table
+INFO  : Completed executing command(queryId=hive_20210810062632_5a6bf967-2ab6-4b57-8526-48648927e6eb); Time taken: 0.732 seconds
+INFO  : OK
++------------------+----------------+----------------------+
+| json_table.name  | json_table.id  |  json_table.skills   |
++------------------+----------------+----------------------+
+| Amit             | 1              | ["Hadoop","Python"]  |
+| Sumit            | 2              | ["Hadoop","Hive"]    |
+| Rohit            | 3              | ["Oozie","Python"]   |
++------------------+----------------+----------------------+
+3 rows selected (3.53 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2> select skills[0] from json_table;
+INFO  : Compiling command(queryId=hive_20210810062708_63fce687-a2af-4dea-9dc7-bd66fbbc4a6a): select skills[0] from json_table
+INFO  : Semantic Analysis Completed (retrial = false)
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_c0, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20210810062708_63fce687-a2af-4dea-9dc7-bd66fbbc4a6a); Time taken: 1.435 seconds
+INFO  : Executing command(queryId=hive_20210810062708_63fce687-a2af-4dea-9dc7-bd66fbbc4a6a): select skills[0] from json_table
+INFO  : Completed executing command(queryId=hive_20210810062708_63fce687-a2af-4dea-9dc7-bd66fbbc4a6a); Time taken: 0.015 seconds
+INFO  : OK
++---------+
+|   _c0   |
++---------+
+| Hadoop  |
+| Hadoop  |
+| Oozie   |
++---------+
+3 rows selected (1.597 seconds)
+0: jdbc:hive2://sandbox-hdp.hortonworks.com:2>
